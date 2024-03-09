@@ -6,9 +6,12 @@
     <title>PAGE AWAL PROJECT</title>
 </head>
 <body>
-    <p>Halo Glen</p>
-    <p>halo rome</p>
+    <p>Halo Glenn</p>
+    <p>Halo rome</p>
     <p>Halo Darius</p>
+    <p>Halo Frans</p>
+    <p>Halo Atan</p>
+
     
 </body>
 </html>
