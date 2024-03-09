@@ -3,4 +3,4 @@
 2. Wajib install XAMPP, nyalakan bagian Apache dan MySql
 3. Wajib buat akun github, username share di grup WA
 
-LET'S START THE PROJECT!! h
+LET'S START THE PROJECT!!
