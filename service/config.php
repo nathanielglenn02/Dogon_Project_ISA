@@ -6,9 +6,9 @@ $username = "root";
 $password = "";
 $database_name = "dogon_isa";
 
-$db = mysqli_connect($hostname, $username, $password, $database_name);
+$koneksi = mysqli_connect($hostname, $username, $password, $database_name);
 
-if ($db->connect_error) {
+if ($koneksi->connect_error) {
     echo "koneksi database rusak";
     die("error!");
 } else {
@@ -16,3 +16,33 @@ if ($db->connect_error) {
 }
 
 $main_url = "http://localhost/Dogon_Project_ISA/";
+
+function uploadimg($url)
+{
+    $namafile = $_FILES['image']['name'];
+    $ukuran = $_FILES['image']['size'];
+    $error = $_FILES['image']['error'];
+    $tmp = $_FILES['image']['tmp_name'];
+
+    //cek file yang dipload 
+    $validExtension = ['jpg', 'jpeg', 'png'];
+    $fileExtension = explode('.', $namafile);
+    $fileExtension = strtolower(end($fileExtension));
+    if (!in_array($fileExtension, $validExtension)) {
+        header("location:" . $url . '?msg=notimage');
+        die;
+    }
+
+    //cek ukuran gambar
+    if ($ukuran > 1000000) {
+        header("location:" . $url . '?msg=oversize');
+        die;
+    }
+
+    //generate nama file gambar
+    $namafilebaru = rand(10, 1000) . '-' . $namafile;
+
+    //upload gambar
+    move_uploaded_file($tmp, "../../asset/image/" . $namafilebaru);
+    return $namafilebaru;
+}
