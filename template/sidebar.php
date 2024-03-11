@@ -10,7 +10,7 @@
                     </a>
                     <hr class="mb-0">
                     <div class="sb-sidenav-menu-heading">Admin</div>
-                    <a class="nav-link" href="<?= $main_url ?>index.php">
+                    <a class="nav-link" href="<?= $main_url ?>user/add_user.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                         User
                     </a>
