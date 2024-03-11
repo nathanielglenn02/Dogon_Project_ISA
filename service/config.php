@@ -43,6 +43,6 @@ function uploadimg($url)
     $namafilebaru = rand(10, 1000) . '-' . $namafile;
 
     //upload gambar
-    move_uploaded_file($tmp, "../../asset/image/" . $namafilebaru);
+    move_uploaded_file($tmp, "../asset/image/" . $namafilebaru);
     return $namafilebaru;
 }
