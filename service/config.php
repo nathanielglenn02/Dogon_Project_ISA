@@ -42,7 +42,7 @@ function uploadimg($url)
 
     //generate nama file gambar
     if ($url = 'profile-sekolah.php'){
-        $namafilebaru = rand(0, 50) . '-bgLogin' . $fileExtension;
+        $namafilebaru = rand(0, 50) . '-bgLogin.' . $fileExtension;
     }else{
         $namafilebaru = rand(10, 1000) . '-' . $namafile;
     }
