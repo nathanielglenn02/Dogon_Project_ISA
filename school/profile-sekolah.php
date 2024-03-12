@@ -30,7 +30,7 @@ if ($msg == 'updated') {
     $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
     <i class="fa-solid fa-circle-check"></i> Data Sekolah berhasil diperbaharui 
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>';
+  </div>';  
 }
 
 $sekolah = mysqli_query($koneksi, "SELECT * FROM sekolah WHERE id = 1");
