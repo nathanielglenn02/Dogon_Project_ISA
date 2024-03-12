@@ -3,14 +3,14 @@ require_once "../service/config.php";
 
 
 if (isset($_POST['simpan'])){
-    $id = $_POST['id'];
-    $nama = trim(htmlspecialchars($_POST['nama']));
-    $email = trim(htmlspecialchars($_POST['email']));
-    $status = $_POST['status'];
-    $akreditasi = $_POST['akreditasi'];
-    $alamat = trim(htmlspecialchars($_POST['alamat']));
-    $visimisi = trim(htmlspecialchars($_POST['visimisi']));
-    $gbr = trim(htmlspecialchars($_POST['gbrLama']));
+    $id             = $_POST['id'];
+    $nama           = trim(htmlspecialchars($_POST['nama']));
+    $email          = trim(htmlspecialchars($_POST['email']));
+    $status         = $_POST['status'];
+    $akreditasi     = $_POST['akreditasi'];
+    $alamat         = trim(htmlspecialchars($_POST['alamat']));
+    $visimisi       = trim(htmlspecialchars($_POST['visimisi']));
+    $gbr            = trim(htmlspecialchars($_POST['gbrLama']));
 
     if ($_FILES['images']['error'] === 4){
         $gbrSekolah = $gbr;
