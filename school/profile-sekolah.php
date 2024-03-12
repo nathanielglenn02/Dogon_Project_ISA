@@ -14,27 +14,21 @@ if (isset($_GET['msg'])) {
 }
 
 $alert = '';
-if ($msg == 'cancel') {
-    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <i class="fa-solid fa-triangle-exclamation"></i> Tambah User gagal, username sudah ada..
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>';
-}
 if ($msg == 'notimage') {
     $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <i class="fa-solid fa-triangle-exclamation"></i> Tambah User gagal, file yang anda upload tidak sesuai..
+    <i class="fa-solid fa-triangle-exclamation"></i> Update Data sekolah gagal, file yang anda upload tidak sesuai..
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
 if ($msg == 'oversize') {
     $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <i class="fa-solid fa-triangle-exclamation"></i> Tambah User gagal, ukuran file gambar melebihi 1 MB
+    <i class="fa-solid fa-triangle-exclamation"></i> Update Data sekolah gagal, ukuran file gambar melebihi 1 MB
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
-if ($msg == 'added') {
+if ($msg == 'updated') {
     $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="fa-solid fa-circle-check"></i> Tambah User berhasil, segera ganti password anda !
+    <i class="fa-solid fa-circle-check"></i> Data Sekolah berhasil diperbaharui 
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
