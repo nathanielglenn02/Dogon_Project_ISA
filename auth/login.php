@@ -1,4 +1,12 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['ssLogin'])) {
+    header('Location:../index.php');
+    exit;
+}
+
 require_once "../service/config.php";
 
 $sekolah = mysqli_query($koneksi, "SELECT * FROM sekolah WHERE id=1");

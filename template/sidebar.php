@@ -41,7 +41,7 @@
             </div>
             <div class="sb-sidenav-footer border">
                 <div class="small">Logged in as:</div>
-                <?= "Admin" ?>
+                <?= $_SESSION['ssUser'] ?>
             </div>
         </nav>
     </div>
