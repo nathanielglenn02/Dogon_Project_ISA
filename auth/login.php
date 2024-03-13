@@ -27,11 +27,11 @@ $data = mysqli_fetch_array($sekolah);
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="<?= $main_url ?>asset/image/toga.png">
     <style>
-    #bgLogin {
-        background-image: url("../asset/image/school.jpg");
-        background-size: cover;
-        background-position: center center;
-    }
+        #bgLogin {
+            background-image: url("../asset/image/school.jpg");
+            background-size: cover;
+            background-position: center center;
+        }
     </style>
 </head>
 
@@ -49,19 +49,14 @@ $data = mysqli_fetch_array($sekolah);
                                 <div class="card-body">
                                     <form action="proseslogin.php" method="POST">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="username" name="username" type="text"
-                                                pattern="[A-Za-z0-9]{3,}"
-                                                title="kombinasi angka dan huruf (besar dan kecil) minimal 3 karakter"
-                                                placeholder="username" autocomplete="off" required />
+                                            <input class="form-control" id="username" name="username" type="text" pattern="[A-Za-z0-9]{3,}" title="kombinasi angka dan huruf (besar dan kecil) minimal 3 karakter" placeholder="username" autocomplete="off" required />
                                             <label for="username">Username</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password"
-                                                placeholder="Password" minlength="4" name="password" required />
+                                            <input class="form-control" id="inputPassword" type="password" placeholder="Password" minlength="4" name="password" required />
                                             <label for="inputPassword">Password</label>
                                         </div>
-                                        <button type="submit" name="login"
-                                            class="btn btn-primary col-12 rounded-pill my-2">Login</button>
+                                        <button type="submit" name="login" class="btn btn-primary col-12 rounded-pill my-2">Login</button>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center py-3">
@@ -80,3 +75,5 @@ $data = mysqli_fetch_array($sekolah);
 </body>
 
 </html>
+
+?>
