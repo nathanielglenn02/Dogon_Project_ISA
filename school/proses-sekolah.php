@@ -29,6 +29,6 @@ if (isset($_POST['simpan'])) {
                             gambar  = '$gbrSekolah'
                             WHERE id = '$id'
                             ");
-    header("location:profile-sekolah.php?'msg=update'");
+    header("location:profile-sekolah.php?msg=updated");
     return;
 }
