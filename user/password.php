@@ -59,9 +59,9 @@ if ($msg == 'err2') {
                 ?>
                 <div class="card">
                     <div class="card-header">
-                        <span class="h5 my-2"><i class="fa-solid fa-pen-to-square"></i>Ganti Password</span>
-                        <button type="submit" name="simpan" class="btn btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i>Simpan</button>
-                        <button type="reset" name="reset" class="btn btn-danger float-end me-1"><i class="fa-solid fa-xmark"></i>Reset</button>
+                        <span class="h5 my-2"><i class="fa-solid fa-pen-to-square"></i> Ganti Password</span>
+                        <button type="submit" name="simpan" class="btn btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                        <button type="reset" name="reset" class="btn btn-danger float-end me-1"><i class="fa-solid fa-xmark"></i> Reset</button>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 row">
