@@ -29,7 +29,7 @@ require_once "../template/sidebar.php";
                     <a href="<?= $main_url ?>siswa/add-siswa.php" class="btn btn-sm btn-primary float-end"><i class="fa-solid fa-plus"></i> Tambah Siswa</a>
                 </div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="datatablesSimple">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
@@ -57,19 +57,25 @@ require_once "../template/sidebar.php";
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Foto</td>
-                                <td>NIS</td>
-                                <td>Nama</td>
-                                <td>Kelas</td>
-                                <td>Jurusan</td>
-                                <td>Alamat</td>
-                                <td align="center">
-                                    <a href="" class="btn btn-sm btn-warning" title="Update Siswa"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="" class="btn btn-sm btn-danger" title="Hapus Siswa"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
+                            <?php
+                            $no = 1;
+                            $querySiswa = mysqli_query($koneksi, "SELECT * FROM siswa");
+
+                            while ($data = mysqli_fetch_array($querySiswa)) { ?>
+                                <tr>
+                                    <th scope="row"><?= $no++ ?></th>
+                                    <td align="center"><img src="../asset/image/<?= $data['foto'] ?>" class="rounded-circle" alt="Foto Siswa" width="60px"></td>
+                                    <td><?= $data['nis'] ?></td>
+                                    <td><?= $data['nama'] ?></td>
+                                    <td><?= $data['kelas'] ?></td>
+                                    <td><?= $data['jurusan'] ?></td>
+                                    <td><?= $data['alamat'] ?></td>
+                                    <td align="center">
+                                        <a href="" class="btn btn-sm btn-warning" title="Update Siswa"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="" class="btn btn-sm btn-danger" title="Hapus Siswa"><i class="fa-solid fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
