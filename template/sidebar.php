@@ -24,7 +24,7 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
                         Siswa
                     </a>
-                    <a class="nav-link" href="<?= $main_url ?>index.php">
+                    <a class="nav-link" href="<?= $main_url ?>guru/guru.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                         Guru
                     </a>
