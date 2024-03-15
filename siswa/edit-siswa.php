@@ -81,10 +81,11 @@ $data = mysqli_fetch_array($siswa);
                                             $jurusan = ["IPA", "IPS", "Bahasa"];
                                             foreach($jurusan as $jrs){ 
                                                 if ($data['jurusan'] == $jrs){ ?>
-                                                    <option value="<?= $jrs; ?>" selected><?= $jrs; ?></option>
-                                                <?php } else { ?>
-                                                    <option value="<?= $jrs; ?>"><?= $jrs; ?></option>
-                                                <?php }
+                                                        <option value="<?= $jrs; ?>" selected><?= $jrs; ?></option>
+                                                    <?php } else { ?>
+                                                        <option value="<?= $jrs; ?>"><?= $jrs; ?></option>
+                                                <?php 
+                                                }
                                             }
                                             ?>
                                         </select>

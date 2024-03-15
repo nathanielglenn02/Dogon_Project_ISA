@@ -50,12 +50,18 @@ if (isset($_POST['simpan'])) {
         }
     }
 
-    mysqli_query($koneksi, "UPDATE siswa SET nama = '$nama', kelas = '$kelas', jurusan = '$jurusan', alamat = '$alamat', foto = '$fotoSiswa', WHERE NIS = '$nis'");
-
+    mysqli_query($koneksi, "UPDATE siswa SET 
+                                nama        = '$nama', 
+                                kelas       = '$kelas', 
+                                jurusan     = '$jurusan', 
+                                alamat      = '$alamat', 
+                                foto        = '$fotoSiswa'
+                                WHERE nis   = '$nis'
+                                ");
     echo "<script>
         alert('Data siswa berhasil di update..');
         document.location.href='siswa.php';
-    </script>";
+        </script>";
     return;
 }
 ?>
