@@ -11,6 +11,40 @@ $title = "Tambah Guru - SMA Dogon";
 require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php"; 
+
+if(isset($_GET['msg'])) {
+    $msg = $_GET['msg'];
+
+}else {
+    $msg = "";
+}
+
+$alert = '';
+if ($msg == 'cancel') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Guru gagal, NIP sudah ada..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'notimage') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Guru gagal, file yang anda upload tidak sesuai..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'oversize') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Guru gagal, ukuran file gambar melebihi 1 MB
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'added') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Tambah Guru berhasil..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+
 ?>
 <div id="layoutSidenav_content">
     <main>
@@ -21,6 +55,10 @@ require_once "../template/sidebar.php";
                 <li class="breadcrumb-item"><a href="guru.php">Guru</a></li>
                 <li class="breadcrumb-item active">Tambah Guru</li>
             </ol>
+            <form action="proses-guru.php" method="POST" enctype="multipart/form-data">
+                <?php if ($msg != '') {
+                    echo $alert;}
+                    ?>
             <div class="card">
                 <div class="card-header">
                     <span class="h2 my-2"><i class="fa-solid fa-square-plus"></i>Tambah Guru</span>
@@ -87,6 +125,7 @@ require_once "../template/sidebar.php";
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </main>
     
