@@ -27,6 +27,18 @@ if ($msg == 'deleted') {
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
+if ($msg == 'updated') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Data Guru berhasil diperbarui..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'cancel') {
+    $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-xmark"></i> Data Guru gagal diperbarui, nip sudah ada..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
 ?>
 <div id="layoutSidenav_content">
     <main>
@@ -77,7 +89,7 @@ if ($msg == 'deleted') {
                             <td><?= $data['agama'] ?></td>
                             <td><?= $data['alamat'] ?></td>
                             <td align = "center">
-                                <a href="" class="btn btn-sm btn-warning" title="update guru"><i class="fa-solid fa-pen"></i></a>
+                                <a href="edit-guru.php?id=<?= $data['id']?>" class="btn btn-sm btn-warning" title="update guru"><i class="fa-solid fa-pen"></i></a>
                                 <button type="button" class="btn btn-sm btn-danger" id="btnHapus" title="hapus guru" data-id="<?= $data['id'] ?>" data-foto="<?= $data['foto'] ?>"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
