@@ -10,10 +10,10 @@ require_once "../service/config.php";
 if (isset($_POST['simpan'])) {
     $nip        = htmlspecialchars($_POST['nip']);
     $nama       = htmlspecialchars($_POST['nama']);
-    $telepon   = htmlspecialchars($_POST['telepon']);
+    $telepon    = htmlspecialchars($_POST['telepon']);
     $agama      = $_POST['agama'];
     $alamat     = htmlspecialchars($_POST['alamat']);
-    $foto       = htmlspecialchars($_POST['image']['name']);
+    $foto       = htmlspecialchars($_FILES['image']['name']);
 
 
     $cekNip = mysqli_query($koneksi, "SELECT nip FROM guruku WHERE nip = '$nip'");

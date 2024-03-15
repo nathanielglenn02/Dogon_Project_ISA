@@ -61,7 +61,7 @@ if ($msg == 'added') {
                     ?>
             <div class="card">
                 <div class="card-header">
-                    <span class="h2 my-2"><i class="fa-solid fa-square-plus"></i>Tambah Guru</span>
+                    <span class="h2 my-2"><i class="fa-solid fa-square-plus"></i> Tambah Guru</span>
                     <button type="submit" name="simpan" class="btn btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i>Simpan</button>
                     <button type="reset" name="reset" class="btn btn-danger float-end me-1"><i class="fa-solid fa-xmark"></i>Reset</button>
                 </div>
@@ -87,7 +87,7 @@ if ($msg == 'added') {
                             </div>
                             <div class="mb-3 row">
                                 <label for="telepon" class="col-sm-2 col-form-label">Telepon</label>
-                                <label for="telepon" class="col-sm-1 col-form-label">:</label>
+                                <label for="" class="col-sm-1 col-form-label">:</label>
                                 <div class="col-sm-9" style="margin-left: -50px;">
                                     <input type="tel" name="telepon" pattern="[0-9]{5,}"
                                     title="minimal 5 angka" class="form-control ps-2
@@ -96,21 +96,21 @@ if ($msg == 'added') {
                             </div>
                             <div class="mb-3 row">
                                 <label for="agama" class="col-sm-2 col-form-label">Agama</label>
-                                <label for="agama" class="col-sm-1 col-form-label">:</label>
+                                <label for="" class="col-sm-1 col-form-label">:</label>
                                 <div class="col-sm-9" style="margin-left: -50px;">
-                                    <select name="" id="agama" class="form-select border-0 border-bottom" required>
+                                    <select name="agama" id="agama" class="form-select border-0 border-bottom" required>
                                         <option value="" selected>--Pilih Agama--</option>
-                                        <option value="Islam" selected>Islam</option>
-                                        <option value="Kristen" selected>Kristen</option>
-                                        <option value="Katolik" selected>Katolik</option>
-                                        <option value="Hindu" selected>Hindu</option>
-                                        <option value="Budha" selected>Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Kristen">Kristen</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
-                                <label for="alamat" class="col-sm-1 col-form-label">:</label>
+                                <label for="" class="col-sm-1 col-form-label">:</label>
                                 <div class="col-sm-9" style="margin-left: -50px;">
                                     <textarea name="alamat" id="alamat" cols="30" rows="3" class="form-control" required></textarea>
                                 </div>
