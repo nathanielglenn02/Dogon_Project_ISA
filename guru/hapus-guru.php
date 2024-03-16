@@ -14,11 +14,7 @@ $foto = $_GET["foto"];
 
 mysqli_query($koneksi, "DELETE FROM guruku WHERE id = '$id'");
 
-if ($foto != 'default.png'){
+if ($foto != 'default.png') {
     unlink("../asset/image/" . $foto);
 }
 header("location:guru.php?msg=deleted");
-
-
-
-?>

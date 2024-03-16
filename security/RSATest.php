@@ -10,9 +10,9 @@ $php_modulus = base64_decode("...");
 $php_exponent = base64_decode("...");
 
 $php_public_key = "-----BEGIN PUBLIC KEY-----\n" .
-                  "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA{$php_modulus}" .
-                  "{$php_exponent}" .
-                  "AQAB\n-----END PUBLIC KEY-----";
+    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA{$php_modulus}" .
+    "{$php_exponent}" .
+    "AQAB\n-----END PUBLIC KEY-----";
 
 // // Encrypt data using PHP's public key
 // $encrypted_data = "";
@@ -52,4 +52,3 @@ $php_public_key = "-----BEGIN PUBLIC KEY-----\n" .
 // openssl_public_encrypt($data_to_encrypt, $encrypted_data, $php_key, OPENSSL_PKCS1_OAEP_PADDING);
 
 // // Save or send $encrypted_data to Python
-?>

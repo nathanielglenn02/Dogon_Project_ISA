@@ -2,7 +2,7 @@
 session_start();
 
 
-if(!isset($_SESSION['ssLogin'])) {
+if (!isset($_SESSION['ssLogin'])) {
     header("Location:../auth/login.php");
     exit();
 }
@@ -13,7 +13,7 @@ $id     = $_GET['nis'];
 $foto   = $_GET['foto'];
 
 mysqli_query($koneksi, "DELETE FROM siswa WHERE nis = '$id'");
-if ($foto != 'default.png'){
+if ($foto != 'default.png') {
     unlink('../asset/image/' . $foto);
 }
 
@@ -22,5 +22,3 @@ echo "<script>
         document.location.href='siswa.php';
     </script>";
 return;
-
-?>

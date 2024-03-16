@@ -64,4 +64,3 @@ if (isset($_POST['simpan'])) {
         </script>";
     return;
 }
-?>

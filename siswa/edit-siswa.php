@@ -59,12 +59,12 @@ $data = mysqli_fetch_array($siswa);
                                         <select name="kelas" id="kelas" class="form-select border-0 border-bottom required">
                                             <?php
                                             $kelas = ["X", "XI", "XII"];
-                                            foreach($kelas as $kls){
+                                            foreach ($kelas as $kls) {
                                                 if ($data['kelas'] == $kls) { ?>
-                                                        <option value="<?= $kls; ?>" selected><?= $kls; ?></option>
-                                                    <?php } else { ?>
-                                                        <option value="<?= $kls; ?>"><?= $kls; ?></option>
-                                                    <?php
+                                                    <option value="<?= $kls; ?>" selected><?= $kls; ?></option>
+                                                <?php } else { ?>
+                                                    <option value="<?= $kls; ?>"><?= $kls; ?></option>
+                                            <?php
                                                 }
                                             }
 
@@ -79,12 +79,12 @@ $data = mysqli_fetch_array($siswa);
                                         <select name="jurusan" id="jurusan" class="form-select border-0 border-bottom required">
                                             <?php
                                             $jurusan = ["IPA", "IPS", "Bahasa"];
-                                            foreach($jurusan as $jrs){ 
-                                                if ($data['jurusan'] == $jrs){ ?>
-                                                        <option value="<?= $jrs; ?>" selected><?= $jrs; ?></option>
-                                                    <?php } else { ?>
-                                                        <option value="<?= $jrs; ?>"><?= $jrs; ?></option>
-                                                <?php 
+                                            foreach ($jurusan as $jrs) {
+                                                if ($data['jurusan'] == $jrs) { ?>
+                                                    <option value="<?= $jrs; ?>" selected><?= $jrs; ?></option>
+                                                <?php } else { ?>
+                                                    <option value="<?= $jrs; ?>"><?= $jrs; ?></option>
+                                            <?php
                                                 }
                                             }
                                             ?>

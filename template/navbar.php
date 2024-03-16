@@ -50,7 +50,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title mb-3 text-capitalize ps-1"><?= $profile['username'] ?></h4>
                                     <hr>
-                                    <div class="row">        
+                                    <div class="row">
                                         <label for="nama" class="col-sm-3 col-form-label">Nama</label>
                                         <div class="col-sm-9">
                                             <input type="text" readonly class="form-control border-0 bg-transparent" id="nama" value=": <?= $profile['nama'] ?>">

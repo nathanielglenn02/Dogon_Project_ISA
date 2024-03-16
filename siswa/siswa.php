@@ -64,15 +64,20 @@ require_once "../template/sidebar.php";
                             while ($data = mysqli_fetch_array($querySiswa)) { ?>
                                 <tr>
                                     <th scope="row"><?= $no++ ?></th>
-                                    <td align="center"><img src="../asset/image/<?= $data['foto'] ?>" class="rounded-circle" alt="Foto Siswa" width="60px"></td>
+                                    <td align="center">
+                                        <center>
+                                            </cente><img src="../asset/image/<?= $data['foto'] ?>" class="rounded-circle" alt="Foto Siswa" width="60px"></center>
+                                    </td>
                                     <td><?= $data['nis'] ?></td>
                                     <td><?= $data['nama'] ?></td>
                                     <td><?= $data['kelas'] ?></td>
                                     <td><?= $data['jurusan'] ?></td>
                                     <td><?= $data['alamat'] ?></td>
                                     <td align="center">
-                                        <a href="edit-siswa.php?nis=<?= $data['nis']?>" class="btn btn-sm btn-warning" title="Update Siswa"><i class="fa-solid fa-pen"></i></a>
-                                        <a href="hapus-siswa.php?nis=<?= $data['nis']?>&foto=<?= $data['foto']?>" class="btn btn-sm btn-danger" title="Hapus Siswa" onclick="return confirm('Anda yakin ingin menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
+                                        <center>
+                                            <a href="" class="btn btn-sm btn-warning" title="Update Siswa"><i class="fa-solid fa-pen"></i></a>
+                                            <a href="" class="btn btn-sm btn-danger" title="Hapus Siswa"><i class="fa-solid fa-trash"></i>
+                                        </center></a>
                                     </td>
                                 </tr>
                             <?php } ?>
