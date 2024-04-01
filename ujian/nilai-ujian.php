@@ -13,6 +13,30 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+if (isset($_GET['msg']) && isset($_GET['nis'])) {
+    $msg = $_GET['msg'];
+    $nis = $_GET['nis'];
+
+}
+else{
+    $msg = "";
+    $nis = "";
+}
+
+$alert = '';
+if ($msg == 'LULUS') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> SELAMAT.. Siswa dengan NIS : ' . $nis . ' berhasil LULUS UJIAN
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'GAGAL') {
+    $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-xmark"></i> SELAMAT.. Siswa dengan NIS : ' . $nis . ' GAGAL UJIAN
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+
 $queryNoUjian = mysqli_query($koneksi, "SELECT max(no_ujian) as maxno FROM ujian");
 $data = mysqli_fetch_array($queryNoUjian);
 $maxno = $data['maxno'];
@@ -44,6 +68,11 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
                     </div>
                 </div>
             </div>
+            <?php if ($msg !== ""){
+                echo $alert;  
+
+            } ?>
+            <form action="proses-ujian.php" methode="POST">
             <div class="row">
                 <div class="col-4">
                     <div class="card">
@@ -54,6 +83,10 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
                             <div class="input-group mb-2">
                                 <span class="input-group-text"><i class="fa-solid fa-rotate fa-sm"></i></span>
                                 <input type="text" name="noUjian" value="<?= $maxno ?>" class="form-control bg-transparent" readonly>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-sm"></i></span>
+                                <input type="date" name="tgl " class="form-control" required>
                             </div>
                             <div class="input-group mb-2">
                                 <span class="input-group-text"><i class="fa-solid fa-user fa-sm"></i></span>
@@ -129,9 +162,59 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </main>
+
+    <script>
+        const jurusan = document.getElementById('jurusan');
+        const mapelKejuruan = document.getElementById('kejuruan');
+
+        jurusan.addEventListener('change', function(){
+            let ajax = new xmlHttpRequest();
+
+
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState == 4 && ajax.status = 200) {
+                    mapelKejuruan.innerHTML = ajax.responseText;
+
+                }
+            }
+
+            ajax.open('GET', 'ajax-mapel.php?jurusan=' + jurusan.value, true)
+            ajax.send();
+
+
+        })
+
+        const total = document.getElementById('total_nilai');
+        const minvalue = document.getElementById('nilai_terendah');
+        const maxvalue = document.getElementById('nilai_tertinggi');
+        const average = document.getElementById('rata2');
+
+        function fnhitung(){
+            let nilaiUjian = document.getElementByClassName('nilai');
+
+            let totalNilai = 0;
+            let listNilai = [];
+            for (let i = 0; i < nilaiUjian.length; i++) {
+                totalNilai = parseInt(totalNilai) + parseInt(nilaiUjain[i].value);
+                total.value = totalNilai;
+
+                listNilai.push(nilaiUjian[i].value);
+
+                listNilai.sort(function(a,b){
+                    return a-b
+                });
+
+                minValue.value = listNilai[0];
+                maxValue.value = listNilai[listNilai.length - 1];
+                average.value = Math.round(totalNilai / listNilai.length);
+                
+            }
+        }
+    </script>
 
     <?php
 
