@@ -140,7 +140,7 @@ require_once "../template/sidebar.php";
     </div>
     
     <script>
-        funciton printDoc(){
+        function printDoc(){
             const myWindow = window.open("../report/r-ujian.php", "", "width=900,height=600,left=100");
         }
 
@@ -148,7 +148,7 @@ require_once "../template/sidebar.php";
 
         function previewPDF() {
             if (noujian.value != '') {
-                count myWindow = window.open("../report/r-nilai-ujian.php?noujian=" + noujian.value);
+                const myWindow = window.open("../report/r-nilai-ujian.php?noujian=" + noujian.value);
             
         }
             

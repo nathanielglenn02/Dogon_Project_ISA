@@ -172,11 +172,11 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
         const mapelKejuruan = document.getElementById('kejuruan');
 
         jurusan.addEventListener('change', function(){
-            let ajax = new xmlHttpRequest();
+            let ajax = new XMLHttpRequest();
 
 
             ajax.onreadystatechange = function () {
-                if (ajax.readyState == 4 && ajax.status = 200) {
+                if (ajax.readyState == 4 & ajax.status == 200) {
                     mapelKejuruan.innerHTML = ajax.responseText;
 
                 }
@@ -189,8 +189,8 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
         })
 
         const total = document.getElementById('total_nilai');
-        const minvalue = document.getElementById('nilai_terendah');
-        const maxvalue = document.getElementById('nilai_tertinggi');
+        const minValue = document.getElementById('nilai_terendah');
+        const maxValue = document.getElementById('nilai_tertinggi');
         const average = document.getElementById('rata2');
 
         function fnhitung(){
@@ -199,7 +199,7 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
             let totalNilai = 0;
             let listNilai = [];
             for (let i = 0; i < nilaiUjian.length; i++) {
-                totalNilai = parseInt(totalNilai) + parseInt(nilaiUjain[i].value);
+                totalNilai = parseInt(totalNilai) + parseInt(nilaiUjian[i].value);
                 total.value = totalNilai;
 
                 listNilai.push(nilaiUjian[i].value);

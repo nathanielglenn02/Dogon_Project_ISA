@@ -75,7 +75,7 @@ require_once "../service/config.php";
         <tfoot>
             <tr>
                 <td colspan="7">
-                    <hr style="margin-top: 1px, margin-bottom: 2px, 
+                    <hr style="margin-top: 1px; margin-bottom: 2px; 
                             margin-left: -5px", size="3", color="grey">
                     <p>lampung, <?= date('j F Y') ?></p>
                     <p>Dibuat oleh, <b>Dewan Guru SMA Dogon</b></p>
