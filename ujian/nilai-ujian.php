@@ -30,7 +30,7 @@ if ($msg == 'LULUS') {
 }
 if ($msg == 'GAGAL') {
     $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <i class="fa-solid fa-circle-xmark"></i> SELAMAT.. Siswa dengan NIS : ' . $nis . ' GAGAL UJIAN
+    <i class="fa-solid fa-circle-xmark"></i> Siswa dengan NIS : ' . $nis . ' GAGAL UJIAN
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
@@ -83,7 +83,7 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
                                 </div>
                                 <div class="input-group mb-2">
                                     <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-sm"></i></span>
-                                    <input type="date" name="tgl " class="form-control" required>
+                                    <input type="date" name="tgl" class="form-control" required>
                                 </div>
                                 <div class="input-group mb-2">
                                     <span class="input-group-text"><i class="fa-solid fa-user fa-sm"></i></span>
@@ -189,7 +189,7 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
         const total = document.getElementById('total_nilai');
         const minValue = document.getElementById('nilai_terendah');
         const maxValue = document.getElementById('nilai_tertinggi');
-        const average = document.getElementById('nilai_rata');
+        const average = document.getElementById('rata2');
 
         function fnhitung() {
             let nilaiUjian = document.getElementsByClassName('nilai');
