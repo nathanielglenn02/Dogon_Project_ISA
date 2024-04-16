@@ -44,7 +44,7 @@ $data = mysqli_fetch_array($queryPelajaran);
                                     <label for="jurusan" class="form-label ps-1">Jurusan</label>
                                     <select name="jurusan" id="jurusan" class="form-select" required>
                                         <?php
-                                        $jurusan = ["Umum", "Kimia Industri", "Kimia Analis"];
+                                        $jurusan = ["IPA", "IPS", "Bahasa"];
                                         foreach ($jurusan as $jrs) {
                                             if ($data['jurusan'] == $jrs) { ?>
                                                 <option value="<?= $jrs ?>" selected><?= $jrs ?></option>

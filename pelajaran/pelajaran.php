@@ -80,9 +80,9 @@ if ($msg == 'updated') {
                                     <label for="jurusan" class="form-label ps-1">Jurusan</label>
                                     <select name="jurusan" id="jurusan" class="form-select" required>
                                         <option value="" selected>-- Pilih Jurusan --</option>
-                                        <option value="Umum">Umum</option>
-                                        <option value="Kimia Industri">Kimia Industri</option>
-                                        <option value="Kimia Analis">Kimia Analis</option>
+                                        <option value="IPA">IPA</option>
+                                        <option value="IPS">IPS</option>
+                                        <option value="Bahasa">Bahasa</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">

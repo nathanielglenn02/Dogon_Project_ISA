@@ -16,9 +16,7 @@ require_once "../template/sidebar.php";
 if (isset($_GET['msg']) && isset($_GET['nis'])) {
     $msg = $_GET['msg'];
     $nis = $_GET['nis'];
-
-}
-else{
+} else {
     $msg = "";
     $nis = "";
 }
@@ -68,101 +66,101 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
                     </div>
                 </div>
             </div>
-            <?php if ($msg !== ""){
-                echo $alert;  
-
+            <?php if ($msg !== "") {
+                echo $alert;
             } ?>
             <form action="proses-ujian.php" methode="POST">
-            <div class="row">
-                <div class="col-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fa-solid fa-plus"></i> Data Peserta Ujian
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fa-solid fa-plus"></i> Data Peserta Ujian
+                            </div>
+                            <div class="card-body">
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text"><i class="fa-solid fa-rotate fa-sm"></i></span>
+                                    <input type="text" name="noUjian" value="<?= $maxno ?>" class="form-control bg-transparent" readonly>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-sm"></i></span>
+                                    <input type="date" name="tgl " class="form-control" required>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text"><i class="fa-solid fa-user fa-sm"></i></span>
+                                    <select name="nis" id="nis" class="form-select" required>
+                                        <option value="">-- Pilih Siswa--</option>
+                                        <?php
+                                        $querySiswa = mysqli_query($koneksi, "SELECT * FROM siswa");
+                                        while ($data = mysqli_fetch_array($querySiswa)) { ?>
+                                            <option value="<?= $data['nis'] ?>"><?= $data['nis'] . '-' . $data['nama'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text"><i class="fa-solid fa-location-arrow fa-sm"></i></span>
+                                    <select name="jurusan" id="jurusan" class="form-select" required>
+                                        <option value="">-- Jurusan--</option>
+                                        <option value="IPA">-- IPA--</option>
+                                        <option value="IPS">-- IPS--</option>
+                                        <option value="Bahasa">-- Bahasa--</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card card-body border mt-2 rounded">
                             <div class="input-group mb-2">
-                                <span class="input-group-text"><i class="fa-solid fa-rotate fa-sm"></i></span>
-                                <input type="text" name="noUjian" value="<?= $maxno ?>" class="form-control bg-transparent" readonly>
+                                <span class="input-group-text col-2 ps-2 fw-bold">Sum</i></span>
+                                <input type="text" name="sum" class="form-control" placeholder="Total Nilai" id="total_nilai" required readonly>
                             </div>
                             <div class="input-group mb-2">
-                                <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-sm"></i></span>
-                                <input type="date" name="tgl " class="form-control" required>
+                                <span class="input-group-text col-2 ps-2 fw-bold">Min</i></span>
+                                <input type="text" name="min" class="form-control" placeholder="Nilai Terendah" id="nilai_terendah" required readonly>
                             </div>
                             <div class="input-group mb-2">
-                                <span class="input-group-text"><i class="fa-solid fa-user fa-sm"></i></span>
-                                <select name="nis" id="nis" class="form-select" required>
-                                    <option value="">-- Pilih Siswa--</option>
-                                    <?php
-                                    $querySiswa = mysqli_query($koneksi, "SELECT * FROM siswa");
-                                    while ($data = mysqli_fetch_array($querySiswa)) { ?>
-                                        <option value="<?= $data['nis'] ?>"><?= $data['nis'] . '-' . $data['nama'] ?></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
+                                <span class="input-group-text col-2 ps-2 fw-bold">Max</i></span>
+                                <input type="text" name="max" class="form-control" placeholder="Nilai Tertinggi" id="nilai_tertinggi" required readonly>
                             </div>
                             <div class="input-group mb-2">
-                                <span class="input-group-text"><i class="fa-solid fa-location-arrow fa-sm"></i></span>
-                                <select name="jurusan" id="jurusan" class="form-select" required>
-                                    <option value="">-- Jurusan--</option>
-                                    <option value="Kimia Industri">-- Kimia Industri--</option>
-                                    <option value="Kimia Analis">-- Kimia Analis--</option>
-                                </select>
+                                <span class="input-group-text col-2 ps-2 fw-bold">Avg</i></span>
+                                <input type="text" name="avg" class="form-control" placeholder="Nilai Rata-rata" id="rata2" required readonly>
                             </div>
                         </div>
                     </div>
-                    <div class="card card-body border mt-2 rounded">
-                        <div class="input-group mb-2">
-                            <span class="input-group-text col-2 ps-2 fw-bold">Sum</i></span>
-                            <input type="text" name="sum" class="form-control" placeholder="Total Nilai" id="total_nilai" required readonly>
-                        </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text col-2 ps-2 fw-bold">Min</i></span>
-                            <input type="text" name="min" class="form-control" placeholder="Nilai Terendah" id="nilai_terendah" required readonly>
-                        </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text col-2 ps-2 fw-bold">Max</i></span>
-                            <input type="text" name="max" class="form-control" placeholder="Nilai Tertinggi" id="nilai_tertinggi" required readonly>
-                        </div>
-                        <div class="input-group mb-2">
-                            <span class="input-group-text col-2 ps-2 fw-bold">Avg</i></span>
-                            <input type="text" name="avg" class="form-control" placeholder="Nilai Rata-rata" id="rata2" required readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fa-solid fa-list"></i> Input Nilai Ujian
-                            <button type="submit" name="simpan" class="btn btn-sm btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
-                            <button type="reset" name="reset" class="btn btn-sm btn-danger me-1 float-end"><i class="fa-solid fa-xmark"></i> Reset</button>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <center>No</center>
-                                        </th>
-                                        <th scope="col">
-                                            <center>Mata Pelajaran</center>
-                                        </th>
-                                        <th scope="col">
-                                            <center>Jurusan</center>
-                                        </th>
-                                        <th scope="col" style="width: 20%">
-                                            <center>Nilai Ujian</center>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="kejuruan">
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fa-solid fa-list"></i> Input Nilai Ujian
+                                <button type="submit" name="simpan" class="btn btn-sm btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                                <button type="reset" name="reset" class="btn btn-sm btn-danger me-1 float-end"><i class="fa-solid fa-xmark"></i> Reset</button>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <center>No</center>
+                                            </th>
+                                            <th scope="col">
+                                                <center>Mata Pelajaran</center>
+                                            </th>
+                                            <th scope="col">
+                                                <center>Jurusan</center>
+                                            </th>
+                                            <th scope="col" style="width: 20%">
+                                                <center>Nilai Ujian</center>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="kejuruan">
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </form>
         </div>
     </main>
@@ -171,11 +169,11 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
         const jurusan = document.getElementById('jurusan');
         const mapelKejuruan = document.getElementById('kejuruan');
 
-        jurusan.addEventListener('change', function(){
+        jurusan.addEventListener('change', function() {
             let ajax = new XMLHttpRequest();
 
 
-            ajax.onreadystatechange = function () {
+            ajax.onreadystatechange = function() {
                 if (ajax.readyState == 4 & ajax.status == 200) {
                     mapelKejuruan.innerHTML = ajax.responseText;
 
@@ -193,7 +191,7 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
         const maxValue = document.getElementById('nilai_tertinggi');
         const average = document.getElementById('nilai_rata');
 
-        function fnhitung(){
+        function fnhitung() {
             let nilaiUjian = document.getElementsByClassName('nilai');
 
             let totalNilai = 0;
@@ -204,14 +202,14 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
 
                 listNilai.push(nilaiUjian[i].value);
 
-                listNilai.sort(function(a,b){
-                    return a-b
+                listNilai.sort(function(a, b) {
+                    return a - b
                 });
 
                 minValue.value = listNilai[0];
                 maxValue.value = listNilai[listNilai.length - 1];
                 average.value = Math.round(totalNilai / listNilai.length);
-                
+
             }
         }
     </script>
