@@ -69,7 +69,7 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
             <?php if ($msg !== "") {
                 echo $alert;
             } ?>
-            <form action="proses-ujian.php" methode="POST">
+            <form action="proses-ujian.php" method="POST">
                 <div class="row">
                     <div class="col-4">
                         <div class="card">

@@ -31,7 +31,7 @@ if (isset($_POST['simpan'])) {
     mysqli_query($koneksi, "INSERT INTO ujian VALUES('$noUjian', '$tgl', '$nis', '$jurusan', $sum, $min, $max, $avg, '$hasilUjian')");
 
     foreach ($mapel as $key => $mpl) {
-        mysqli_query($koneksi, "INSERT INTO nilai_ujian VALUES(null, '$noUjian', '$mpl', '$jurus[$key]', $nilai[$key])");
+        mysqli_query($koneksi, "INSERT INTO nilai_ujian VALUES('UTS-001', '$noUjian', '$mpl', '$jurus[$key]', $nilai[$key])");
     }
 
     header("location:nilai-ujian.php?msg=$hasilUjian&nis=$nis");

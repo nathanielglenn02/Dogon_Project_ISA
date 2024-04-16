@@ -32,21 +32,19 @@ require_once "../template/sidebar.php";
                         float-end" type="button" data-bs-toggle="dropdown">Cetak</button>
 
                         <ul class="dropdown-menu">
-                            <li><button type="buttom" onclick="printDoc()"
-                            class="dropdown-item"><i class="fa fa-search" aria-hidden="true"></i>
-                            Hasil Ujian</button></li>
+                            <li><button type="buttom" onclick="printDoc()" class="dropdown-item"><i class="fa fa-search" aria-hidden="true"></i>
+                                    Hasil Ujian</button></li>
 
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <button type="buttom" 
-                                class="dropdown-item" data-bs-toggle="modal" data-bs-target="mdlCetak">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                                Nilai Ujian</button>
+                                <button type="buttom" class="dropdown-item" data-bs-toggle="modal" data-bs-target="mdlCetak">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    Nilai Ujian</button>
                             </li>
 
-                        </ul> 
+                        </ul>
 
                     </div>
                 </div>
@@ -91,17 +89,15 @@ require_once "../template/sidebar.php";
                                     <td align="center"><?= $data['nilai_rata'] ?></td>
                                     <td>
                                         <?php
-                                        if ($data['hasil_ujia   n'] == 'LULUS') { ?>
+                                        if ($data['hasil_ujian'] == 'LULUS') { ?>
                                             <button type="button" class="btn 
                                             btn-success btn-sm rounded-0 col-10 
-                                            fw-bold text-uppercase"><?= $data
-                                            ['hasil_ujian'] ?></button>
+                                            fw-bold text-uppercase"><?= $data['hasil_ujian'] ?></button>
                                         <?php } else { ?>
                                             <button type="button" class="btn 
                                             btn-danger btn-sm rounded-0 col-10 
-                                            fw-bold text-uppercase"><?= $data
-                                            ['hasil_ujian'] ?></button>
-                                        
+                                            fw-bold text-uppercase"><?= $data['hasil_ujian'] ?></button>
+
                                         <?php }
                                         ?>
                                     </td>
@@ -124,9 +120,8 @@ require_once "../template/sidebar.php";
                         <?php
                         $dataUjian = mysqli_query($koneksi, "SELECT * FROM ujian");
                         while ($data = mysqli_fetch_array($dataUjian)) { ?>
-                            <option value="<?= $data['no_ujian'] ?>"> <?= $data
-                            ['no_ujian'] . ' - ' . $data['nis'] . ' - ' . $data['jurusan'] ?></option> 
-                            <?php
+                            <option value="<?= $data['no_ujian'] ?>"> <?= $data['no_ujian'] . ' - ' . $data['nis'] . ' - ' . $data['jurusan'] ?></option>
+                        <?php
                         }
                         ?>
                     </select>
@@ -134,13 +129,13 @@ require_once "../template/sidebar.php";
                 <div div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="previewPDF()">OK</button>
-                 </div>
+                </div>
             </div>
         </div>
     </div>
-    
+
     <script>
-        function printDoc(){
+        function printDoc() {
             const myWindow = window.open("../report/r-ujian.php", "", "width=900,height=600,left=100");
         }
 
@@ -149,11 +144,10 @@ require_once "../template/sidebar.php";
         function previewPDF() {
             if (noujian.value != '') {
                 const myWindow = window.open("../report/r-nilai-ujian.php?noujian=" + noujian.value);
-            
-        }
-            
-        }
 
+            }
+
+        }
     </script>
 
 
