@@ -16,7 +16,7 @@ while($data = mysqli_fetch_array($queryPelajaran)){ ?>
         <td><input type="text" name="mapel[]" value="<?=$data['pelajaran']?>" 
         class="border-0 bg-transparent col-12" readonly></td>
 
-        <td><input type="text" name="jurusan[]" 
+        <td><input type="text" name="jurus[]" 
         value="<?=$data['jurusan']?>" 
         class="border-0 bg-transparent col-12" readonly></td>
 

@@ -162,8 +162,8 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
                         </div>
                     </div>
                 </div>
-                </form>
             </div>
+            </form>
         </div>
     </main>
 
@@ -191,10 +191,10 @@ $maxno = "UTS-" . sprintf("%03s", $noUrut);
         const total = document.getElementById('total_nilai');
         const minValue = document.getElementById('nilai_terendah');
         const maxValue = document.getElementById('nilai_tertinggi');
-        const average = document.getElementById('rata2');
+        const average = document.getElementById('nilai_rata');
 
         function fnhitung(){
-            let nilaiUjian = document.getElementByClassName('nilai');
+            let nilaiUjian = document.getElementsByClassName('nilai');
 
             let totalNilai = 0;
             let listNilai = [];
