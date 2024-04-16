@@ -142,7 +142,7 @@ if ($msg == 'cancel') {
                 $('#mdlHapus').modal('show');
                 let idGuru = $(this).data('id');
                 let fotoGuru = $(this).data('foto');
-                $('#btnMdlHapus').attr("href", "hapus-guru.php?id=" + idGuru + fotoGuru)
+                $('#btnMdlHapus').attr("href", "hapus-guru.php?id=" + idGuru + "&foto=" + fotoGuru);
             })
 
         })
