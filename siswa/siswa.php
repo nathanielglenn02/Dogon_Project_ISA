@@ -4,7 +4,7 @@ session_start();
 
 if (!isset($_SESSION['ssLogin'])) {
     header('Location:../auth/login.php');
-    exit;
+    exit();
 }
 
 require_once "../service/config.php";
@@ -20,7 +20,8 @@ require_once "../template/sidebar.php";
         <div class="container-fluid px-4">
             <h1 class="mt-4">Siswa</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a href="../index.php" style="text-decoration: none; color: black;">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.php" style="text-decoration: none; color: black;">Home</a>
+                </li>
                 <li class="breadcrumb-item active">Siswa</li>
             </ol>
             <div class="card">
