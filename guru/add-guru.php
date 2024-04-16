@@ -62,8 +62,8 @@ if ($msg == 'added') {
                 <div class="card">
                     <div class="card-header">
                         <span class="h2 my-2"><i class="fa-solid fa-square-plus"></i> Tambah Guru</span>
-                        <button type="submit" name="simpan" class="btn btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i>Simpan</button>
-                        <button type="reset" name="reset" class="btn btn-danger float-end me-1"><i class="fa-solid fa-xmark"></i>Reset</button>
+                        <button type="submit" name="simpan" class="btn btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                        <button type="reset" name="reset" class="btn btn-danger float-end me-1"><i class="fa-solid fa-xmark"></i> Reset</button>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -117,7 +117,8 @@ if ($msg == 'added') {
                             <div class="col-4 text-center px-5">
                                 <img src="../asset/image/default.png" class="mb-3" width="40%" alt="">
                                 <input type="file" name="image" class="form-control form-control-sm">
-                                <small class="text-secondary">Pilih foto PNG, JPG atau JPEG dengan ukuran maximal 1 MB</small>
+                                <small class="text-secondary">Pilih foto PNG, JPG atau JPEG dengan ukuran maximal 1
+                                    MB</small>
                                 <div><small class="text-secondary">width = height</small></div>
                             </div>
                         </div>

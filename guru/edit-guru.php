@@ -7,7 +7,7 @@ if (!isset($_SESSION["ssLogin"])) {
 }
 
 require_once "../service/config.php";
-$title = "Tambah Guru - SMA Dogon";
+$title = "Update Guru - SMA Dogon";
 require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
@@ -38,7 +38,7 @@ $data = mysqli_fetch_array($queryGuru);
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">
-                                <input type="hidden" name="nip" value="<?= $data['id'] ?>">
+                                <input type="hidden" name="id" value="<?= $data['id'] ?>">
                                 <div class="mb-3 row">
                                     <label for="nip" class="col-sm-2 col-form-label">NIP</label>
                                     <label for="nip" class="col-sm-1 col-form-label">:</label>
@@ -96,7 +96,8 @@ $data = mysqli_fetch_array($queryGuru);
                                 <input type="hidden" name="fotoLama" value="<?= $data['foto'] ?>">
                                 <img src="../asset/image/<?= $data['foto'] ?>" class="mb-3 rounded-circle" width="40%" alt="">
                                 <input type="file" name="image" class="form-control form-control-sm">
-                                <small class="text-secondary">Pilih foto PNG, JPG atau JPEG dengan ukuran maximal 1 MB</small>
+                                <small class="text-secondary">Pilih foto PNG, JPG atau JPEG dengan ukuran maximal 1
+                                    MB</small>
                                 <div><small class="text-secondary">width = height</small></div>
                             </div>
                         </div>
