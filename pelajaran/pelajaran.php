@@ -13,6 +13,23 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+$username = $_SESSION["ssUser"];
+$queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
+$profile = mysqli_fetch_array($queryUser);
+
+if ($profile['jabatan'] == "Siswa") {
+    $displaySiswa = "visually-hidden";
+    $displayCol = "12";
+    $displayOperasi = "";
+} else if ($profile['jabatan'] == "Guru") {
+    $displayGuru = "visually-hidden";
+    $displayOperasi = "";
+} else {
+    $displaySiswa = "";
+    $displayCol = "8";
+    $displayOperasi = "Operasi";
+}
+
 if (isset($_GET['msg'])) {
     $msg = $_GET['msg'];
 } else {
@@ -64,8 +81,9 @@ if ($msg == 'updated') {
                 echo $alert;
             }
             ?>
+
             <div class="row">
-                <div class="col-4">
+                <div class="col-4 <?= $displaySiswa ?> <?= $displayGuru ?>">
                     <div class="card">
                         <div class="card-header">
                             <i class="fa-solid fa-plus"></i> Tambah Pelajaran
@@ -104,7 +122,7 @@ if ($msg == 'updated') {
                         </div>
                     </div>
                 </div>
-                <div class="col-8">
+                <div class="col-<?= $displayCol ?>">
                     <div class="card">
                         <div class="card-header">
                             <i class="fa-solid fa-list"></i> Data Pelajaran
@@ -173,7 +191,7 @@ if ($msg == 'updated') {
                                             <center>Guru</center>
                                         </th>
                                         <th scope="col">
-                                            <center>Operasi</center>
+                                            <center><?= $displayOperasi ?></center>
                                         </th>
                                     </tr>
                                 </thead>
@@ -187,8 +205,8 @@ if ($msg == 'updated') {
                                                 <td><?= $data['jurusan'] ?></td>
                                                 <td><?= $data['guru'] ?></td>
                                                 <td align="center">
-                                                    <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="update pelajaran"><i class="fa-solid fa-pen"></i></a>
-                                                    <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger" title="hapus pelajaran"><i class="fa-solid fa-trash"></i></button>
+                                                    <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning <?= $displaySiswa ?> <?= $displayGuru ?>" title="update pelajaran"><i class="fa-solid fa-pen"></i></a>
+                                                    <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger <?= $displaySiswa ?> <?= $displayGuru ?>" title="hapus pelajaran"><i class="fa-solid fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         <?php }

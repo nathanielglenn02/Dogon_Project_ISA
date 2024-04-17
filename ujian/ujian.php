@@ -13,7 +13,19 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+$username = $_SESSION["ssUser"];
+$queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
+$profile = mysqli_fetch_array($queryUser);
+
+if ($profile['jabatan'] == "Siswa") {
+    $displaySiswa = "visually-hidden";
+} else if ($profile['jabatan'] == "Kepsek") {
+    $displayKepsek = "visually-hidden";
+} else {
+    $displaySiswa = "";
+}
 ?>
+
 
 <div id="layoutSidenav_content">
     <main>
@@ -26,7 +38,10 @@ require_once "../template/sidebar.php";
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-list"></i> Data Ujian
-                    <a href="nilai-ujian.php" class="btn btn-sm btn-primary float-end ms-1"><i class="fa-solid fa-plus"></i> Tambah Data Ujian</a>
+                    <a href="nilai-ujian.php" class="btn btn-sm btn-primary float-end ms-1 <?= $displaySiswa ?> <?= $displayKepsek ?>"><i class="fa-solid fa-plus"></i> Tambah Data Ujian</a>
+
+                    <a href="#" class="btn btn-sm btn-primary float-end ms-1" data-bs-toggle="modal" data-bs-target="#mdlCetak"><i class="fa-solid fa-magnifying-glass"></i> Lihat Nilai Ujian</a>
+
                     <div class="dropdown" style="margin-top: -30px;">
                         <button class="btn btn-sm btn-primary dropdown-toggle 
                         float-end" type="button" data-bs-toggle="dropdown">Cetak</button>
@@ -34,16 +49,6 @@ require_once "../template/sidebar.php";
                         <ul class="dropdown-menu">
                             <li><button type="buttom" onclick="printDoc()" class="dropdown-item"><i class="fa fa-search" aria-hidden="true"></i>
                                     Hasil Ujian</button></li>
-
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <button type="buttom" class="dropdown-item" data-bs-toggle="modal" data-bs-target="mdlCetak">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                    Nilai Ujian</button>
-                            </li>
-
                         </ul>
 
                     </div>
@@ -139,12 +144,14 @@ require_once "../template/sidebar.php";
             const myWindow = window.open("../report/r-ujian.php", "", "width=900,height=600,left=100");
         }
 
-        let noujian = document.getElementById('no');
+        let noUjian = document.getElementById('no');
 
         function previewPDF() {
-            if (noujian.value != '') {
-                const myWindow = window.open("../report/r-nilai-ujian.php?noujian=" + noujian.value);
+            if (noUjian.value != '') {
+                const myWindow = window.open("../report/r-nilai-ujian.php?noUjian=" + noUjian.value);
 
+            } else {
+                alert("Please select a No Ujian.");
             }
 
         }

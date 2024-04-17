@@ -13,6 +13,18 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+$username = $_SESSION["ssUser"];
+$queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
+$profile = mysqli_fetch_array($queryUser);
+
+if ($profile['jabatan'] == "Siswa") {
+    $displaySiswa = "visually-hidden";
+} else if ($profile['jabatan'] == "Guru") {
+    $displayGuru = "visually-hidden";
+} else {
+    $displaySiswa = "";
+}
+
 if (isset($_GET['msg'])) {
     $msg = $_GET['msg'];
 } else {
@@ -55,7 +67,7 @@ if ($msg == 'cancel') {
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-list"></i> Data Guru
-                    <a href="<?= $main_url ?>guru/add-guru.php" class="btn btn-sm btn-primary float-end"><i class="fa-solid fa-plus"></i>Tambah Guru</a>
+                    <a href="<?= $main_url ?>guru/add-guru.php" class="btn btn-sm btn-primary float-end <?= $displaySiswa ?> <?= $displayGuru ?>"><i class="fa-solid fa-plus"></i>Tambah Guru</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-hover" id="datatablesSimple">
@@ -83,7 +95,7 @@ if ($msg == 'cancel') {
                                     <center>Alamat</center>
                                 </th>
                                 <th scope="col">
-                                    <center>Operasi</center>
+                                    <center class="<?= $displaySiswa ?> <?= $displayGuru ?>">Operasi</center>
                                 </th>
                             </tr>
                         </thead>
@@ -104,8 +116,8 @@ if ($msg == 'cancel') {
                                     <td><?= $data['agama'] ?></td>
                                     <td><?= $data['alamat'] ?></td>
                                     <td align="center">
-                                        <a href="edit-guru.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="update guru"><i class="fa-solid fa-pen"></i></a>
-                                        <button type="button" class="btn btn-sm btn-danger" id="btnHapus" title="hapus guru" data-id="<?= $data['id'] ?>" data-foto="<?= $data['foto'] ?>"><i class="fa-solid fa-trash"></i></button>
+                                        <a href="edit-guru.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning <?= $displaySiswa ?> <?= $displayGuru ?>" title="update guru"><i class="fa-solid fa-pen"></i></a>
+                                        <button type="button" class="btn btn-sm btn-danger <?= $displaySiswa ?> <?= $displayGuru ?>" id="btnHapus" title="hapus guru" data-id="<?= $data['id'] ?>" data-foto="<?= $data['foto'] ?>"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php } ?>

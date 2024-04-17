@@ -92,8 +92,9 @@ if ($msg == 'added') {
                                     <div class="col-sm-9" style="margin-left: -50px;">
                                         <select name="jabatan" id="jabatan" class="form-select border-0 border-bottom" required>
                                             <option value="" selected>-- Pilih Jabatan --</option>
+                                            <option value="Admin">Admin</option>
                                             <option value="Kepsek">Kepala Sekolah</option>
-                                            <option value="Staf TU">Staf TU</option>
+                                            <option value="Siswa">Siswa</option>
                                             <option value="Guru">Guru Mata Pelajaran</option>
                                         </select>
                                     </div>

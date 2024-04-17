@@ -1,3 +1,21 @@
+<?php
+
+$username = $_SESSION["ssUser"];
+$queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
+$profile = mysqli_fetch_array($queryUser);
+
+if ($profile['jabatan'] == "Siswa") {
+    $displaySiswa = "visually-hidden";
+} else if ($profile['jabatan'] == "Guru") {
+    $displayGuru = "visually-hidden";
+} else if ($profile['jabatan'] == "Kepsek") {
+    $displayKepsek = "visually-hidden";
+} else {
+    $displaySiswa = "";
+}
+
+?>
+
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion bg-light" id="sidenavAccordion">
@@ -9,8 +27,8 @@
                         Dashboard
                     </a>
                     <hr class="mb-0">
-                    <div class="sb-sidenav-menu-heading">Admin</div>
-                    <a class="nav-link" href="<?= $main_url ?>user/add-user.php">
+                    <div class="sb-sidenav-menu-heading">Auth</div>
+                    <a class="nav-link <?= $displaySiswa ?> <?= $displayGuru ?> <?= $displayKepsek ?>" href="<?= $main_url ?>user/add-user.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                         User
                     </a>
@@ -20,10 +38,13 @@
                     </a>
                     <hr class="mb-0">
                     <div class="sb-sidenav-menu-heading">Data</div>
-                    <a class="nav-link" href="<?= $main_url ?>siswa/siswa.php">
+
+                    <a class="nav-link <?= $displaySiswa ?>" href="<?= $main_url ?>siswa/siswa.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
                         Siswa
                     </a>
+
+
                     <a class="nav-link" href="<?= $main_url ?>guru/guru.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                         Guru
