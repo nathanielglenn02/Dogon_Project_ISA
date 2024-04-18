@@ -8,7 +8,7 @@ if (!isset($_SESSION['ssLogin'])) {
 }
 
 require_once "../service/config.php";
-$title = "Data Ujian - SMK Pelita";
+$title = "Data Ujian - SMA Dogon";
 require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
@@ -125,7 +125,8 @@ if ($profile['jabatan'] == "Siswa") {
                         <?php
                         $dataUjian = mysqli_query($koneksi, "SELECT * FROM ujian");
                         while ($data = mysqli_fetch_array($dataUjian)) { ?>
-                            <option value="<?= $data['no_ujian'] ?>"> <?= $data['no_ujian'] . ' - ' . $data['nis'] . ' - ' . $data['jurusan'] ?></option>
+                            <option value="<?= $data['no_ujian'] ?>">
+                                <?= $data['no_ujian'] . ' - ' . $data['nis'] . ' - ' . $data['jurusan'] ?></option>
                         <?php
                         }
                         ?>

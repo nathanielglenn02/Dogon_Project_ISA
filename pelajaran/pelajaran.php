@@ -8,7 +8,7 @@ if (!isset($_SESSION["ssLogin"])) {
 }
 
 require_once "../service/config.php";
-$title = "Mata Pelajaran - SMK Pelita";
+$title = "Mata Pelajaran - SMA Dogon";
 require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";

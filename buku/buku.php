@@ -8,7 +8,7 @@ if (!isset($_SESSION['ssLogin'])) {
 }
 
 require_once "../service/config.php";
-$title = "Data Buku - SMK Pelita";
+$title = "Data Buku - SMA Dogon";
 require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
@@ -142,7 +142,8 @@ if ($profile['jabatan'] == "Siswa") {
                                     $pages = ceil($jmlData / $page);
                                     ?>
                                     <div class="col-4 text-end">
-                                        <label class="col-8 col-form-label text-end">Jumlah Data : <?= $jmlData ?></label>
+                                        <label class="col-8 col-form-label text-end">Jumlah Data :
+                                            <?= $jmlData ?></label>
                                     </div>
                                 </div>
                         </tbody>
