@@ -57,6 +57,10 @@ if ($profile['jabatan'] == "Siswa") {
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user-graduate"></i></div>
                         Ujian
                     </a>
+                    <a class="nav-link" href="<?= $main_url ?>buku/buku.php">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+                        Buku
+                    </a>
                     <hr class="mb-0">
                 </div>
             </div>
