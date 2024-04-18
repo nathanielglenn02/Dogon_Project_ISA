@@ -11,7 +11,7 @@ require_once "service/config.php";
 
 $title = "Dashboard - SMA Dogon";
 require_once "template/header.php";
-require_once "template/navbar.php";
+require_once "template/navbar.php"; 
 require_once "template/sidebar.php";
 
 $querySiswa = mysqli_query($koneksi, "SELECT * FROM siswa");
