@@ -24,7 +24,7 @@ require_once "../template/sidebar.php";
                 <li class="breadcrumb-item"><a href="buku.php" style="text-decoration: none; color: black;">Buku</a></li>
                 <li class="breadcrumb-item active">Tambah Buku</li>
             </ol>
-            <form action="proses-buku.php" method="POST" enctype="multipart/form-data">
+            <form action="proses-buku.php" method="POST">
                 <div class="card">
                     <div class="card-header">
                         <span class="h5 my-2"><i class="fa-solid fa-square-plus"></i> Tambah Buku</span>
