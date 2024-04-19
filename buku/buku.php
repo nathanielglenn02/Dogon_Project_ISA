@@ -37,7 +37,7 @@ if ($profile['jabatan'] == "Siswa") {
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-list"></i> Data Buku
-                    <a href="add-buku.php" class="btn btn-sm btn-primary float-end ms-1"><i class="fa-solid fa-plus"></i> Tambah Data Buku</a>
+                    <a href="buku/add-buku.php" class="btn btn-sm btn-primary float-end ms-1"><i class="fa-solid fa-plus"></i> Tambah Data Buku</a>
                 </div>
                 <div class="card-body">
 
