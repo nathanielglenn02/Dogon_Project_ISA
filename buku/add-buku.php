@@ -33,14 +33,14 @@ require_once "../template/sidebar.php";
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-3 text-center px-5">
+                                <img src="../asset/image/default.png" class="mb-3" width="40%" alt="">
+                                <input type="file" name="image" class="form-control form-control-sm">
+                                <small class="text-secondary">Pilih foto PNG, JPG atau JPEG dengan ukuran maximal 1
+                                    MB</small>
+                                <div><small class="text-secondary">width = height</small></div>
+                            </div>
                             <div class="col-8">
-                                <div class="mb-3 row">
-                                    <label for="sampul" class="col-sm-2 col-form-label">Sampul</label>
-                                    <label for="sampul" class="col-sm-1 col-form-label">:</label>
-                                    <div class="col-sm-9" style="margin-left: -50px;">
-                                        <input type="text" name="sampul" class="form-control ps-2 border-0 border-bottom" required>
-                                    </div>
-                                </div>
                                 <div class="mb-3 row">
                                     <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
                                     <label for="isbn" class="col-sm-1 col-form-label">:</label>
