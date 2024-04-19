@@ -95,7 +95,8 @@ if ($profile['jabatan'] == "Guru") {
                                     <th scope="row"><?= $no++ ?></th>
                                     <td align="center">
                                         <center>
-                                            </cente><img src="../asset/image/<?= $data['foto'] ?>" class="rounded-circle" alt="Foto Siswa" width="60px"></center>
+                                            <img src="../asset/image/<?= $data['foto'] ?>" class="rounded-circle" alt="Foto Siswa" width="60px">
+                                        </center>
                                     </td>
                                     <td><?= $data['nis'] ?></td>
                                     <td><?= $data['nama'] ?></td>

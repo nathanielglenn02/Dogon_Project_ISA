@@ -34,10 +34,11 @@ require_once "../template/sidebar.php";
                     <div class="card-body">
                         <div class="row">
                             <div class="col-3 text-center px-5">
-                                <img src="../asset/image/default.png" class="mb-3" width="40%" alt="">
+                                <label for="sampul" class="col-sm-4 col-form-label">Sampul</label>
+                                <label for="sampul" class="col-sm-1 col-form-label">:</label>
+                                <img src="../asset/image/default-cover-book.jpg" style="margin-bottom: 15px" class="rounded-circle" width="40%" alt="Sampul Buku">
                                 <input type="file" name="image" class="form-control form-control-sm">
-                                <small class="text-secondary">Pilih foto PNG, JPG atau JPEG dengan ukuran maximal 1
-                                    MB</small>
+                                <small class="text-secondary">Ukuran max 1 MB (.png, .jpg, .jpeg)</small>
                                 <div><small class="text-secondary">width = height</small></div>
                             </div>
                             <div class="col-8">

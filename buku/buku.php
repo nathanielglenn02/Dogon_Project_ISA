@@ -81,7 +81,7 @@ if ($profile['jabatan'] == "Siswa") {
                         </thead>
                         <tbody>
                             <?php
-                            $queryUjian = mysqli_query($koneksi, "
+                            $queryBuku = mysqli_query($koneksi, "
                             SELECT 
                                 buku.*,
                                 user_peminjam.username AS username_peminjam,
@@ -91,11 +91,15 @@ if ($profile['jabatan'] == "Siswa") {
                                 LEFT JOIN user AS user_peminjam ON buku.id_user_peminjam = user_peminjam.id
                                 LEFT JOIN user AS user_pelayanan ON buku.id_user_pelayanan = user_pelayanan.id
                         ");
-                            while ($data = mysqli_fetch_array($queryUjian)) {
+                            while ($data = mysqli_fetch_array($queryBuku)) {
                             ?>
                                 <tr>
                                     <td><?= $data['id'] ?></td>
-                                    <td><?= $data['sampul'] ?></td>
+                                    <td align="center">
+                                        <center>
+                                            <img src="../asset/image/<?= $data['sampul'] ?>" class="rounded-circle" alt="Sampul Buku" width="60px">
+                                        </center>
+                                    </td>
                                     <td><?= $data['isbn'] ?></td>
                                     <td><?= $data['title'] ?></td>
                                     <td><?= $data['penerbit'] ?></td>
