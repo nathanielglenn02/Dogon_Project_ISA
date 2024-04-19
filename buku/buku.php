@@ -85,9 +85,14 @@ if ($profile['jabatan'] == "Siswa") {
                                     <td><?= $data['title'] ?></td>
                                     <td><?= $data['penerbit'] ?></td>
                                     <td><?= $data['tahun_buku'] ?></td>
-                                    <td><?= $data['stok_buku'] ?></td>
                                     <td>
-                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="update pelajaran"><i class="fa-solid fa-shuffle"></i></a>
+                                        <?= $data['stok_buku'] ?>
+                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?> " class="btn btn-sm btn-warning" title="Pinjam Buku"><i class="fa-solid fa-cart-shopping"></i></a>
+                                        <button onclick="openPinjamModal(<?= $data['id']; ?>);" class="btn btn-sm btn-warning" title="Pinjam Buku"><i class="fa-solid fa-cart-shopping"></i></button>
+
+                                    </td>
+                                    <td>
+                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="Update Status"><i class="fa-solid fa-shuffle"></i></a>
                                         <?= $data['dipinjam'] ?>
                                     </td>
                                     <td>
@@ -147,3 +152,30 @@ if ($profile['jabatan'] == "Siswa") {
 </div>
 </main>
 </div>
+
+<!-- Modal Pinjam Buku -->
+<div class="modal" id="mdlPinjamBuku" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Konfirmasi Peminjaman Buku</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Anda yakin akan meminjam buku ini?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <a href="" id="btnConfirmPinjam" class="btn btn-primary">Ya, Pinjam</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPinjamModal(id) {
+        document.getElementById('btnConfirmPinjam').href = 'proses-pinjam.php?id=' + id; // Sesuaikan dengan skrip peminjaman buku Anda
+        var myModal = new bootstrap.Modal(document.getElementById('mdlPinjamBuku'));
+        myModal.show();
+    }
+</script>
