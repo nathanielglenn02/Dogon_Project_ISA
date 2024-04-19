@@ -7,15 +7,15 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-require_once "../service/config.php";
 $title = "Tambah Buku - Perpustakaan";
+require_once "../service/config.php";
 require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
 ?>
 
-<div>
+<div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Tambah Buku</h1>
@@ -33,6 +33,6 @@ require_once "../template/sidebar.php";
                     </div>
                 </div>
             </form>
-        </div>    
+        </div>
     </main>
 </div>
