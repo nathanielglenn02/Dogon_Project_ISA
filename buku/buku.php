@@ -69,13 +69,28 @@ if ($profile['jabatan'] == "Siswa") {
                                     <center>Status</center>
                                 </th>
                                 <th scope="col">
+                                    <center>User Peminjam</center>
+                                </th>
+                                <th scope="col">
+                                    <center>User Pelayanan</center>
+                                </th>
+                                <th scope="col">
                                     <center>Operasi</center>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $queryUjian = mysqli_query($koneksi, "SELECT * FROM buku");
+                            $queryUjian = mysqli_query($koneksi, "
+                            SELECT 
+                                buku.*,
+                                user_peminjam.username AS username_peminjam,
+                                user_pelayanan.username AS username_pelayanan
+                            FROM 
+                                buku
+                                LEFT JOIN user AS user_peminjam ON buku.id_user_peminjam = user_peminjam.id
+                                LEFT JOIN user AS user_pelayanan ON buku.id_user_pelayanan = user_pelayanan.id
+                        ");
                             while ($data = mysqli_fetch_array($queryUjian)) {
                             ?>
                                 <tr>
@@ -94,6 +109,12 @@ if ($profile['jabatan'] == "Siswa") {
                                     <td>
                                         <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="Update Status"><i class="fa-solid fa-shuffle"></i></a>
                                         <?= $data['dipinjam'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $data['username_peminjam'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $data['username_pelayanan'] ?>
                                     </td>
                                     <td>
                                         <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger" title="hapus pelajaran"><i class="fa-solid fa-trash"></i></button>
