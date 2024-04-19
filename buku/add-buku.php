@@ -21,10 +21,10 @@ require_once "../template/sidebar.php";
             <h1 class="mt-4">Tambah Buku</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="../index.php" style="text-decoration: none; color: black;">Home</a></li>
-                <li class="breadcrumb-item"><a href="siswa.php" style="text-decoration: none; color: black;">Buku</a></li>
+                <li class="breadcrumb-item"><a href="buku.php" style="text-decoration: none; color: black;">Buku</a></li>
                 <li class="breadcrumb-item active">Tambah Buku</li>
             </ol>
-            <form action="proses-siswa.php" method="POST" enctype="multipart/form-data">
+            <form action="proses-buku.php" method="POST" enctype="multipart/form-data">
                 <div class="card">
                     <div class="card-header">
                         <span class="h5 my-2"><i class="fa-solid fa-square-plus"></i> Tambah Buku</span>
