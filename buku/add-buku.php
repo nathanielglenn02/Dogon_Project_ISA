@@ -36,3 +36,9 @@ require_once "../template/sidebar.php";
         </div>
     </main>
 </div>
+
+<?php
+
+require_once "../template/footer.php";
+
+?>
