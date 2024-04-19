@@ -13,6 +13,22 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+$privateKeyPath = '../path/to/private_key.pem';
+
+function decryptDataWithPrivateKey($encryptedData, $privateKeyPath)
+{
+    if (!file_exists($privateKeyPath)) {
+        die("File kunci privat tidak ditemukan: $privateKeyPath");
+    }
+    $privateKey = file_get_contents($privateKeyPath);
+    $privateKeyResource = openssl_pkey_get_private($privateKey);
+    if (!$privateKeyResource) {
+        die("Gagal memuat kunci privat.");
+    }
+    openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privateKeyResource);
+    return $decrypted;
+}
+
 $username = $_SESSION["ssUser"];
 $queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
 $profile = mysqli_fetch_array($queryUser);
@@ -72,7 +88,9 @@ if ($profile['jabatan'] == "Guru") {
                             $no = 1;
                             $querySiswa = mysqli_query($koneksi, "SELECT * FROM siswa");
 
-                            while ($data = mysqli_fetch_array($querySiswa)) { ?>
+                            while ($data = mysqli_fetch_array($querySiswa)) {
+                                $decryptedAlamat = decryptDataWithPrivateKey($data['alamat'], $privateKeyPath);
+                            ?>
                                 <tr>
                                     <th scope="row"><?= $no++ ?></th>
                                     <td align="center">
@@ -83,7 +101,7 @@ if ($profile['jabatan'] == "Guru") {
                                     <td><?= $data['nama'] ?></td>
                                     <td><?= $data['kelas'] ?></td>
                                     <td><?= $data['jurusan'] ?></td>
-                                    <td><?= $data['alamat'] ?></td>
+                                    <td><?= $decryptedAlamat ?></td>
                                     <td align="center">
                                         <center>
                                             <a href="edit-siswa.php?nis=<?= $data['nis'] ?>" class="btn btn-sm btn-warning <?= $displayGuru ?>" title="Update Siswa"><i class="fa-solid fa-pen"></i></a>

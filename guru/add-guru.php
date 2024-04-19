@@ -12,6 +12,25 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+$publicKeyPath = '../security/public_key.pem';
+
+function encryptDataWithPublicKey($data, $publicKeyPath)
+{
+    if (!file_exists($publicKeyPath)) {
+        die("File kunci publik tidak ditemukan: $publicKeyPath");
+    }
+    $publicKey = file_get_contents($publicKeyPath);
+    if (!$publicKey) {
+        die("Gagal membaca kunci publik.");
+    }
+    if (!openssl_public_encrypt($data, $encrypted, $publicKey)) {
+        die("Gagal mengenkripsi data dengan kunci publik.");
+    }
+    return base64_encode($encrypted); // Encode ke base64 agar bisa disimpan sebagai string
+}
+
+
+
 if (isset($_GET['msg'])) {
     $msg = $_GET['msg'];
 } else {
@@ -127,13 +146,6 @@ if ($msg == 'added') {
             </form>
         </div>
     </main>
-
-
-
-
-
-
-
 
     <?php
     require_once "../template/footer.php";

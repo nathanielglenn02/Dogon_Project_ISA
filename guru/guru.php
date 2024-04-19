@@ -13,6 +13,21 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+function decryptDataWithPrivateKey($encryptedData, $privateKeyPath)
+{
+    if (!file_exists($privateKeyPath)) {
+        die("File kunci privat tidak ditemukan: $privateKeyPath");
+    }
+    $privateKey = file_get_contents($privateKeyPath);
+    $privateKeyResource = openssl_pkey_get_private($privateKey);
+    if (!$privateKeyResource) {
+        die("Gagal memuat kunci privat.");
+    }
+    openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privateKeyResource);
+    return $decrypted;
+}
+
+
 $username = $_SESSION["ssUser"];
 $queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
 $profile = mysqli_fetch_array($queryUser);
@@ -102,25 +117,28 @@ if ($msg == 'cancel') {
                         <tbody>
                             <?php
                             $no = 1;
-                            $queryGuru = mysqli_query($koneksi, "SELECT * FROM  guruku");
+
+                            $queryGuru = mysqli_query($koneksi, "SELECT * FROM guruku");
                             while ($data = mysqli_fetch_array($queryGuru)) {
-
-
+                                $privateKeyPath = '../path/to/private_key.pem';
+                                $decryptedTelepon = decryptDataWithPrivateKey($data['telepon'], $privateKeyPath);
+                                $decryptedAlamat = decryptDataWithPrivateKey($data['alamat'], $privateKeyPath);
                             ?>
                                 <tr>
                                     <th scope="row"><?= $no++ ?></th>
                                     <td align="center"><img src="../asset/image/<?= $data['foto'] ?>" class="rounded-circle" width="60px" alt=""></td>
                                     <td><?= $data['nip'] ?></td>
                                     <td><?= $data['nama'] ?></td>
-                                    <td><?= $data['telepon'] ?></td>
+                                    <td><?= $decryptedTelepon ?></td>
                                     <td><?= $data['agama'] ?></td>
-                                    <td><?= $data['alamat'] ?></td>
+                                    <td><?= $decryptedAlamat ?></td>
                                     <td align="center">
                                         <a href="edit-guru.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning <?= $displaySiswa ?> <?= $displayGuru ?>" title="update guru"><i class="fa-solid fa-pen"></i></a>
                                         <button type="button" class="btn btn-sm btn-danger <?= $displaySiswa ?> <?= $displayGuru ?>" id="btnHapus" title="hapus guru" data-id="<?= $data['id'] ?>" data-foto="<?= $data['foto'] ?>"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            <?php
+                            } ?>
 
                         </tbody>
                     </table>

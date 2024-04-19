@@ -13,6 +13,35 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+function encryptDataWithPublicKey($data, $publicKeyPath)
+{
+    if (!file_exists($publicKeyPath)) {
+        die("File kunci publik tidak ditemukan: $publicKeyPath");
+    }
+    $publicKey = file_get_contents($publicKeyPath);
+    if (!$publicKey) {
+        die("Gagal membaca kunci publik.");
+    }
+    if (!openssl_public_encrypt($data, $encrypted, $publicKey)) {
+        die("Gagal mengenkripsi data dengan kunci publik.");
+    }
+    return base64_encode($encrypted); // Encode ke base64 agar bisa disimpan sebagai string
+}
+
+function decryptDataWithPrivateKey($encryptedData, $privateKeyPath)
+{
+    if (!file_exists($privateKeyPath)) {
+        die("File kunci privat tidak ditemukan: $privateKeyPath");
+    }
+    $privateKey = file_get_contents($privateKeyPath);
+    $privateKeyResource = openssl_pkey_get_private($privateKey);
+    if (!$privateKeyResource) {
+        die("Gagal memuat kunci privat.");
+    }
+    openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privateKeyResource);
+    return $decrypted;
+}
+
 $nis = $_GET['nis'];
 
 $siswa = mysqli_query($koneksi, "SELECT * FROM siswa WHERE nis = '$nis'");
@@ -92,10 +121,15 @@ $data = mysqli_fetch_array($siswa);
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
+                                    <?php
+                                    $privateKeyPath = '../path/to/private_key.pem';
+                                    $decryptedAlamat = decryptDataWithPrivateKey($data['alamat'], $privateKeyPath);
+
+                                    ?>
                                     <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                                     <label for="nis" class="col-sm-1 col-form-label">:</label>
                                     <div class="col-sm-9" style="margin-left: -40px;">
-                                        <textarea name="alamat" id="alamat" cols="30" rows="3" placeholder="Alamat Siswa" class="forrm-control" required><?= $data['alamat'] ?></textarea>
+                                        <textarea name="alamat" id="alamat" cols="30" rows="3" placeholder="Alamat Siswa" class="forrm-control" required><?= $decryptedAlamat ?></textarea>
                                     </div>
                                 </div>
                             </div>

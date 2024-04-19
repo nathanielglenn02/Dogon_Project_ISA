@@ -37,7 +37,7 @@ if ($profile['jabatan'] == "Siswa") {
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-list"></i> Data Buku
-
+                    <a href="add-buku.php" class="btn btn-sm btn-primary float-end ms-1"><i class="fa-solid fa-plus"></i> Tambah Data Buku</a>
                 </div>
                 <div class="card-body">
 
@@ -66,7 +66,7 @@ if ($profile['jabatan'] == "Siswa") {
                                     <center>Stok Buku</center>
                                 </th>
                                 <th scope="col">
-                                    <center>Disimpan</center>
+                                    <center>Status</center>
                                 </th>
                                 <th scope="col">
                                     <center>Operasi</center>
@@ -86,9 +86,11 @@ if ($profile['jabatan'] == "Siswa") {
                                     <td><?= $data['penerbit'] ?></td>
                                     <td><?= $data['tahun_buku'] ?></td>
                                     <td><?= $data['stok_buku'] ?></td>
-                                    <td><?= $data['dipinjam'] ?></td>
                                     <td>
-                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="update pelajaran"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="update pelajaran"><i class="fa-solid fa-shuffle"></i></a>
+                                        <?= $data['dipinjam'] ?>
+                                    </td>
+                                    <td>
                                         <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger" title="hapus pelajaran"><i class="fa-solid fa-trash"></i></button>
 
                                     </td>
@@ -119,14 +121,6 @@ if ($profile['jabatan'] == "Siswa") {
                                         $halaktif = 1;
                                     }
 
-                                    /*
-                                if (isset($_GET['hal']) && is_numeric($_GET['hal'])) {
-                                    $halaktif = (int)$_GET['hal'];
-                                } else {
-                                    //$halaktif = 1;
-                                    echo "<script>alert('Nilai halaktif: $halaktif');</script>";
-                                }
-                                */
                                     if (@$_GET['cari']) {
                                         $keyword = @$_GET['cari'];
                                     } else {
@@ -137,7 +131,7 @@ if ($profile['jabatan'] == "Siswa") {
                                     $no = $start + 1;
                                     $queryPelajaran = mysqli_query($koneksi, "SELECT * FROM pelajaran WHERE pelajaran like '%$keyword%' or jurusan like '%$keyword%' or guru like '%$keyword%' limit $page offset $start");
 
-                                    $queryJmlData = mysqli_query($koneksi, "SELECT * FROM pelajaran WHERE pelajaran like '%$keyword%' or jurusan like '%$keyword%' or guru like '%$keyword%'");
+                                    $queryJmlData = mysqli_query($koneksi, "SELECT * FROM buku WHERE isbn like '%$keyword%' or title like '%$keyword%' or penerbit like '%$keyword%' or tahun_buku like '%$keyword%'");
                                     $jmlData = mysqli_num_rows($queryJmlData);
                                     $pages = ceil($jmlData / $page);
                                     ?>

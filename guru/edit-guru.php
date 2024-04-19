@@ -12,6 +12,37 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+$publicKeyPath = '../security/public_key.pem';
+
+function encryptDataWithPublicKey($data, $publicKeyPath)
+{
+    if (!file_exists($publicKeyPath)) {
+        die("File kunci publik tidak ditemukan: $publicKeyPath");
+    }
+    $publicKey = file_get_contents($publicKeyPath);
+    if (!$publicKey) {
+        die("Gagal membaca kunci publik.");
+    }
+    if (!openssl_public_encrypt($data, $encrypted, $publicKey)) {
+        die("Gagal mengenkripsi data dengan kunci publik.");
+    }
+    return base64_encode($encrypted); // Encode ke base64 agar bisa disimpan sebagai string
+}
+
+function decryptDataWithPrivateKey($encryptedData, $privateKeyPath)
+{
+    if (!file_exists($privateKeyPath)) {
+        die("File kunci privat tidak ditemukan: $privateKeyPath");
+    }
+    $privateKey = file_get_contents($privateKeyPath);
+    $privateKeyResource = openssl_pkey_get_private($privateKey);
+    if (!$privateKeyResource) {
+        die("Gagal memuat kunci privat.");
+    }
+    openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privateKeyResource);
+    return $decrypted;
+}
+
 $id = $_GET['id'];
 
 $queryGuru = mysqli_query($koneksi, "SELECT * FROM guruku WHERE id = '$id'");
@@ -56,11 +87,17 @@ $data = mysqli_fetch_array($queryGuru);
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
+                                    <?php
+                                    $privateKeyPath = '../path/to/private_key.pem';
+                                    $decryptedTelepon = decryptDataWithPrivateKey($data['telepon'], $privateKeyPath);
+                                    $decryptedAlamat = decryptDataWithPrivateKey($data['alamat'], $privateKeyPath);
+
+                                    ?>
                                     <label for="telepon" class="col-sm-2 col-form-label">Telepon</label>
                                     <label for="" class="col-sm-1 col-form-label">:</label>
                                     <div class="col-sm-9" style="margin-left: -50px;">
                                         <input type="tel" name="telepon" pattern="[0-9]{5,}" title="minimal 5 angka" class="form-control ps-2
-                                    border-0 border-bottom" value="<?= $data['telepon'] ?>" required>
+                                    border-0 border-bottom" value="<?= $decryptedTelepon ?>" required>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -88,7 +125,7 @@ $data = mysqli_fetch_array($queryGuru);
                                     <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                                     <label for="" class="col-sm-1 col-form-label">:</label>
                                     <div class="col-sm-9" style="margin-left: -50px;">
-                                        <textarea name="alamat" id="alamat" cols="30" rows="3" class="form-control" required><?= $data['alamat'] ?></textarea>
+                                        <textarea name="alamat" id="alamat" cols="30" rows="3" class="form-control" required><?= $decryptedAlamat ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -106,13 +143,6 @@ $data = mysqli_fetch_array($queryGuru);
             </form>
         </div>
     </main>
-
-
-
-
-
-
-
 
     <?php
     require_once "../template/footer.php";

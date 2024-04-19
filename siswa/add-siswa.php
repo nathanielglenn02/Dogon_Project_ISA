@@ -13,6 +13,23 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+$publicKeyPath = '../security/public_key.pem';
+
+function encryptDataWithPublicKey($data, $publicKeyPath)
+{
+    if (!file_exists($publicKeyPath)) {
+        die("File kunci publik tidak ditemukan: $publicKeyPath");
+    }
+    $publicKey = file_get_contents($publicKeyPath);
+    if (!$publicKey) {
+        die("Gagal membaca kunci publik.");
+    }
+    if (!openssl_public_encrypt($data, $encrypted, $publicKey)) {
+        die("Gagal mengenkripsi data dengan kunci publik.");
+    }
+    return base64_encode($encrypted); // Encode ke base64 agar bisa disimpan sebagai string
+}
+
 $queryNis = mysqli_query($koneksi, "SELECT max(nis) as maxNis FROM siswa");
 $data = mysqli_fetch_array($queryNis);
 $maxNIS = $data['maxNis'];

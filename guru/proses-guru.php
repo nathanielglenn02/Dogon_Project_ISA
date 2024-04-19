@@ -6,21 +6,43 @@ if (!isset($_SESSION['ssLogin'])) {
     exit();
 }
 
-require_once "../service/config.php";
-if (isset($_POST['simpan'])) {
-    $nip        = htmlspecialchars($_POST['nip']);
-    $nama       = htmlspecialchars($_POST['nama']);
-    $telepon    = htmlspecialchars($_POST['telepon']);
-    $agama      = $_POST['agama'];
-    $alamat     = htmlspecialchars($_POST['alamat']);
-    $foto       = htmlspecialchars($_FILES['image']['name']);
+function encryptDataWithPublicKey($data, $publicKeyPath)
+{
+    // Memuat kunci publik dari file
+    $publicKeyContents = file_get_contents($publicKeyPath);
+    if (!$publicKeyContents) {
+        die("Gagal membaca kunci publik dari path: $publicKeyPath");
+    }
 
+    $publicKey = openssl_pkey_get_public($publicKeyContents);
+    if (!$publicKey) {
+        die("Gagal memuat kunci publik.");
+    }
+
+    // Melakukan enkripsi
+    if (!openssl_public_encrypt($data, $encrypted, $publicKey)) {
+        die("Gagal mengenkripsi data dengan kunci publik.");
+    }
+    return base64_encode($encrypted);
+}
+
+require_once "../service/config.php";
+
+if (isset($_POST['simpan'])) {
+    $nip = htmlspecialchars($_POST['nip']);
+    $nama = htmlspecialchars($_POST['nama']);
+    $telepon = htmlspecialchars($_POST['telepon']);
+    $agama = $_POST['agama'];
+    $alamat = htmlspecialchars($_POST['alamat']);
+    $foto = htmlspecialchars($_FILES['image']['name']);
+
+    $telepon_encrypted = encryptDataWithPublicKey($telepon, '../path/to/public_key.pem');
+    $alamat_encrypted = encryptDataWithPublicKey($alamat, '../path/to/public_key.pem');
 
     $cekNip = mysqli_query($koneksi, "SELECT nip FROM guruku WHERE nip = '$nip'");
-
     if (mysqli_num_rows($cekNip) > 0) {
         header('location:add-guru.php?msg=cancel');
-        return;
+        exit;
     }
 
     if ($foto != null) {
@@ -30,11 +52,12 @@ if (isset($_POST['simpan'])) {
         $foto = 'default.png';
     }
 
-    mysqli_query($koneksi, "INSERT INTO guruku VALUES (null, '$nip', '$nama', '$alamat', '$telepon', '$agama', '$foto')");
-
+    mysqli_query($koneksi, "INSERT INTO guruku VALUES (null, '$nip', '$nama', '$alamat_encrypted', '$telepon_encrypted', '$agama', '$foto')");
+    echo $alamat_encrypted;
     header("location:add-guru.php?msg=added");
-    return;
+    exit;
 }
+
 if (isset($_POST['update'])) {
     $id         = $_POST['id'];
     $nip        = htmlspecialchars($_POST['nip']);
@@ -43,6 +66,9 @@ if (isset($_POST['update'])) {
     $agama      = $_POST['agama'];
     $alamat     = htmlspecialchars($_POST['alamat']);
     $foto       = htmlspecialchars($_POST['fotoLama']);
+
+    $telepon_encrypted = encryptDataWithPublicKey($telepon, '../path/to/public_key.pem');
+    $alamat_encrypted = encryptDataWithPublicKey($alamat, '../path/to/public_key.pem');
 
 
     $sqlGuru    = mysqli_query($koneksi, "SELECT * FROM guruku WHERE id='$id'");
@@ -71,9 +97,9 @@ if (isset($_POST['update'])) {
     mysqli_query($koneksi, "UPDATE guruku SET
                            nip = '$nip',
                            nama = '$nama',
-                           telepon = '$telepon',
+                           telepon = '$telepon_encrypted',
                            agama = '$agama',
-                           alamat = '$alamat',
+                           alamat = '$alamat_encrypted',
                            foto = '$fotoGuru'
                            WHERE id = $id   
                     ");
