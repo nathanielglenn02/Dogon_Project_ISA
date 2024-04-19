@@ -31,6 +31,47 @@ require_once "../template/sidebar.php";
                         <button type="submit" name="simpan" class="btn btn-primary float-end"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                         <button type="reset" name="reset" class="btn btn-danger float-end me-1"><i class="fa-solid fa-xmark"></i> Reset</button>
                     </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="mb-3 row">
+                                    <label for="sampul" class="col-sm-2 col-form-label">Sampul</label>
+                                    <label for="sampul" class="col-sm-1 col-form-label">:</label>
+                                    <div class="col-sm-9" style="margin-left: -50px;">
+                                        <input type="text" name="sampul" class="form-control ps-2 border-0 border-bottom" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
+                                    <label for="isbn" class="col-sm-1 col-form-label">:</label>
+                                    <div class="col-sm-9" style="margin-left: -50px;">
+                                        <input type="text" name="isbn" class="form-control ps-2 border-0 border-bottom" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="judul" class="col-sm-2 col-form-label">Judul</label>
+                                    <label for="judul" class="col-sm-1 col-form-label">:</label>
+                                    <div class="col-sm-9" style="margin-left: -50px;">
+                                        <input type="text" name="judul" class="form-control ps-2 border-0 border-bottom" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="penerbit" class="col-sm-2 col-form-label">Penerbit</label>
+                                    <label for="penerbit" class="col-sm-1 col-form-label">:</label>
+                                    <div class="col-sm-9" style="margin-left: -50px;">
+                                        <input type="text" name="penerbit" class="form-control ps-2 border-0 border-bottom" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="tahun-buku" class="col-sm-2 col-form-label">Tahun Buku</label>
+                                    <label for="tahun-buku" class="col-sm-1 col-form-label">:</label>
+                                    <div class="col-sm-9" style="margin-left: -50px;">
+                                        <input type="text" name="tahun-buku" class="form-control ps-2 border-0 border-bottom" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
