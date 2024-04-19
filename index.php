@@ -47,7 +47,7 @@ while ($data = mysqli_fetch_array($lulusUjian)) {
                     <div class="card bg-primary text-white mb-4">
                         <div class="card-body">Jumlah Siswa</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="#"> <?= $jmlSiswa . ' orang' ?></a>
+                            <a class="small text-white stretched-link" href="#"> <?= $jmlSiswa . ' orang' ?></a> 
                             <div class="small text-white">
                                 <i class="fas fa-angle-right"></i>
                             </div>
