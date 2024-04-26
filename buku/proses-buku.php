@@ -10,7 +10,7 @@ if (!isset($_SESSION['ssLogin'])) {
 require_once "../service/config.php";
 
 if (isset($_POST['simpan'])) {
-    $sampul = htmlspecialchars($_POST['sampul']);
+    $sampul = htmlspecialchars($_FILES['image']['name']);
     $isbn = htmlspecialchars($_POST['isbn']);
     $judul = htmlspecialchars($_POST['judul']);
     $penerbit = htmlspecialchars($_POST['penerbit']);

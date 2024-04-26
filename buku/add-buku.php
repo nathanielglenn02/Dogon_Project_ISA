@@ -33,14 +33,15 @@ require_once "../template/sidebar.php";
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-3 text-center px-5">
+                                <label for="sampul" class="col-sm-4 col-form-label">Sampul</label>
+                                <label for="sampul" class="col-sm-1 col-form-label">:</label>
+                                <img src="../asset/image/default-cover-book.jpg" style="margin-bottom: 15px" class="rounded-circle" width="40%" alt="Sampul Buku">
+                                <input type="file" name="image" class="form-control form-control-sm">
+                                <small class="text-secondary">Ukuran max 1 MB (.png, .jpg, .jpeg)</small>
+                                <div><small class="text-secondary">width = height</small></div>
+                            </div>
                             <div class="col-8">
-                                <div class="mb-3 row">
-                                    <label for="sampul" class="col-sm-2 col-form-label">Sampul</label>
-                                    <label for="sampul" class="col-sm-1 col-form-label">:</label>
-                                    <div class="col-sm-9" style="margin-left: -50px;">
-                                        <input type="text" name="sampul" class="form-control ps-2 border-0 border-bottom" required>
-                                    </div>
-                                </div>
                                 <div class="mb-3 row">
                                     <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
                                     <label for="isbn" class="col-sm-1 col-form-label">:</label>

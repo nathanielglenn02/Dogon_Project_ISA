@@ -24,6 +24,20 @@ if ($profile['jabatan'] == "Siswa") {
 } else {
     $displaySiswa = "";
 }
+
+if (isset($_GET['msg'])) {
+    $msg = $_GET['msg'];
+} else {
+    $msg = "";
+}
+
+$alert = '';
+if ($msg == 'deleted') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Data Buku berhasil dihapus..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
 ?>
 
 <div id="layoutSidenav_content">
@@ -81,7 +95,7 @@ if ($profile['jabatan'] == "Siswa") {
                         </thead>
                         <tbody>
                             <?php
-                            $queryUjian = mysqli_query($koneksi, "
+                            $queryBuku = mysqli_query($koneksi, "
                             SELECT 
                                 buku.*,
                                 user_peminjam.username AS username_peminjam,
@@ -91,11 +105,15 @@ if ($profile['jabatan'] == "Siswa") {
                                 LEFT JOIN user AS user_peminjam ON buku.id_user_peminjam = user_peminjam.id
                                 LEFT JOIN user AS user_pelayanan ON buku.id_user_pelayanan = user_pelayanan.id
                         ");
-                            while ($data = mysqli_fetch_array($queryUjian)) {
+                            while ($data = mysqli_fetch_array($queryBuku)) {
                             ?>
                                 <tr>
                                     <td><?= $data['id'] ?></td>
-                                    <td><?= $data['sampul'] ?></td>
+                                    <td align="center">
+                                        <center>
+                                            <img src="../asset/image/<?= $data['sampul'] ?>" class="rounded-circle" alt="Sampul Buku" width="60px">
+                                        </center>
+                                    </td>
                                     <td><?= $data['isbn'] ?></td>
                                     <td><?= $data['title'] ?></td>
                                     <td><?= $data['penerbit'] ?></td>
@@ -117,7 +135,7 @@ if ($profile['jabatan'] == "Siswa") {
                                         <?= $data['username_pelayanan'] ?>
                                     </td>
                                     <td>
-                                        <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger" title="hapus pelajaran"><i class="fa-solid fa-trash"></i></button>
+                                        <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger" title="hapus buku"><i class="fa-solid fa-trash"></i></button>
 
                                     </td>
                                 </tr>
@@ -174,6 +192,48 @@ if ($profile['jabatan'] == "Siswa") {
 </main>
 </div>
 
+<div class="modal" id="mdlHapus" tabindex="-1" data-bs-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Konfirmasi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Anda yakin akan menghapus buku ini ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <a href="" id="btnMdlHapus" class="btn btn-primary">Ya</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', "#btnHapus", function() {
+                $('#mdlHapus').modal('show');
+                let id = $(this).data('id');
+                $('#btnMdlHapus').attr('href', "hapus-buku.php?id=" + id);
+            })
+
+            setTimeout(function() {
+                $('#added').fadeIn('slow');
+            }, 300)
+            setTimeout(function() {
+                $('#added').fadeOut('slow');
+            }, 3000)
+
+            setTimeout(function() {
+                $('#updated').slideDown(700);
+            }, 300)
+
+            setTimeout(function() {
+                $('#updated').slideUp(700);
+            }, 5000)
+        })
+    </script>
+</div>
 <!-- Modal Pinjam Buku -->
 <div class="modal" id="mdlPinjamBuku" tabindex="-1">
     <div class="modal-dialog">
@@ -200,3 +260,8 @@ if ($profile['jabatan'] == "Siswa") {
         myModal.show();
     }
 </script>
+<?php
+
+require_once "../template/footer.php"
+
+?>
