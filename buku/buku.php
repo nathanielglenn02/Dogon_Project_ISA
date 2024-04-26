@@ -7,7 +7,7 @@ if (!isset($_SESSION['ssLogin'])) {
     exit();
 }
 
-require_once "../service/config.php";
+require_once "../service/config.php"; 
 $title = "Data Buku - SMA Dogon";
 require_once "../template/header.php";
 require_once "../template/navbar.php";

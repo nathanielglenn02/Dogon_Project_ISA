@@ -24,7 +24,7 @@ require_once "../template/sidebar.php";
                 <li class="breadcrumb-item"><a href="buku.php" style="text-decoration: none; color: black;">Buku</a></li>
                 <li class="breadcrumb-item active">Tambah Buku</li>
             </ol>
-            <form action="proses-buku.php" method="POST">
+            <form action="proses-buku.php" method="POST" enctype="multipart/form-data">
                 <div class="card">
                     <div class="card-header">
                         <span class="h5 my-2"><i class="fa-solid fa-square-plus"></i> Tambah Buku</span>
@@ -36,10 +36,10 @@ require_once "../template/sidebar.php";
                             <div class="col-3 text-center px-5">
                                 <label for="sampul" class="col-sm-4 col-form-label">Sampul</label>
                                 <label for="sampul" class="col-sm-1 col-form-label">:</label>
-                                <img src="../asset/image/default-cover-book.jpg" style="margin-bottom: 15px" class="rounded-circle" width="40%" alt="Sampul Buku">
+                                <img src="../asset/image/default-cover-book.png" style="margin-bottom: 15px" class="rounded-circle" width="40%">
                                 <input type="file" name="image" class="form-control form-control-sm">
                                 <small class="text-secondary">Ukuran max 1 MB (.png, .jpg, .jpeg)</small>
-                                <div><small class="text-secondary">width = height</small></div>
+                                <small class="text-secondary">width = height</small>
                             </div>
                             <div class="col-8">
                                 <div class="mb-3 row">
