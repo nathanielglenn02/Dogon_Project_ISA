@@ -41,7 +41,6 @@ if ($profile['jabatan'] == "Siswa") {
                     <a href="nilai-ujian.php" class="btn btn-sm btn-primary float-end ms-1 <?= $displaySiswa ?> <?= $displayKepsek ?>"><i class="fa-solid fa-plus"></i> Tambah Data Ujian</a>
 
                     <a href="#" class="btn btn-sm btn-primary float-end ms-1" data-bs-toggle="modal" data-bs-target="#mdlCetak"><i class="fa-solid fa-magnifying-glass"></i> Lihat Nilai Ujian</a>
-
                     <div class="dropdown" style="margin-top: -30px;">
                         <button class="btn btn-sm btn-primary dropdown-toggle 
                         float-end" type="button" data-bs-toggle="dropdown">Cetak</button>

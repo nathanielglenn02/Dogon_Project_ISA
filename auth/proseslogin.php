@@ -16,6 +16,7 @@ if (isset($_POST['login'])) {
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row["password"])) {
             $_SESSION['ssLogin'] = true;
+            $_SESSION['userId'] = $row['id']; // Menyimpan ID pengguna
             $_SESSION['ssUser'] = $username;
             header("location:../index.php");
             exit;

@@ -13,6 +13,7 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+
 $username = $_SESSION["ssUser"];
 $queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
 $profile = mysqli_fetch_array($queryUser);
@@ -38,9 +39,18 @@ if ($msg == 'deleted') {
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
+if ($msg == 'notborrowed') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-exclamation"></i>  Mohon pinjam buku terlebih dahulu
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
 ?>
 
+
+
 <div id="layoutSidenav_content">
+
     <main>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Buku</h1>
@@ -48,6 +58,11 @@ if ($msg == 'deleted') {
                 <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
                 <li class="breadcrumb-item active">Data Buku</li>
             </ol>
+            <?php
+            if ($msg != "") {
+                echo $alert;
+            }
+            ?>
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-list"></i> Data Buku
@@ -89,7 +104,7 @@ if ($msg == 'deleted') {
                                     <center>User Pelayanan</center>
                                 </th>
                                 <th scope="col">
-                                    <center>Operasi</center>
+                                    <center class="<?= $displaySiswa ?>">Operasi</center>
                                 </th>
                             </tr>
                         </thead>
@@ -120,12 +135,12 @@ if ($msg == 'deleted') {
                                     <td><?= $data['tahun_buku'] ?></td>
                                     <td>
                                         <?= $data['stok_buku'] ?>
-                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?> " class="btn btn-sm btn-warning" title="Pinjam Buku"><i class="fa-solid fa-cart-shopping"></i></a>
-                                        <button onclick="openPinjamModal(<?= $data['id']; ?>);" class="btn btn-sm btn-warning" title="Pinjam Buku"><i class="fa-solid fa-cart-shopping"></i></button>
+                                        <button type="button" data-id="<?= $data['id'] ?>" id="btnPinjam" class="btn btn-sm btn-warning" title="pinjam buku"><i class="fa-solid fa-cart-shopping"></i></button>
 
+                                        <button type="button" data-id="<?= $data['id'] ?>" id="btnKembali" class="btn btn-sm btn-warning" title="kembali buku"><i class="fa-solid fa-rotate-left"></i></button>
                                     </td>
                                     <td>
-                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" class="btn btn-sm btn-warning" title="Update Status"><i class="fa-solid fa-shuffle"></i></a>
+                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" id="btnSimpan" class="btn btn-sm btn-warning <?= $displaySiswa ?>" title="Update Status"><i class="fa-solid fa-shuffle"></i></a>
                                         <?= $data['dipinjam'] ?>
                                     </td>
                                     <td>
@@ -135,8 +150,7 @@ if ($msg == 'deleted') {
                                         <?= $data['username_pelayanan'] ?>
                                     </td>
                                     <td>
-                                        <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger" title="hapus buku"><i class="fa-solid fa-trash"></i></button>
-
+                                        <button type="button" data-id="<?= $data['id'] ?>" id="btnHapus" class="btn btn-sm btn-danger <?= $displaySiswa ?>" title="hapus buku"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -184,37 +198,64 @@ if ($msg == 'deleted') {
                                             <?= $jmlData ?></label>
                                     </div>
                                 </div>
+                            </div>
                         </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-</div>
-</main>
-</div>
+    </main>
 
-<div class="modal" id="mdlHapus" tabindex="-1" data-bs-backdrop="static">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Konfirmasi</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Anda yakin akan menghapus buku ini ?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <a href="" id="btnMdlHapus" class="btn btn-primary">Ya</a>
-                    </div>
+    <!-- modal pinjam buku -->
+    <div class="modal" id="mdlPinjam" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Anda yakin ingin meminjam buku ini ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a href="" id="btnMdlPinjam" class="btn btn-primary">Ya</a>
                 </div>
             </div>
+        </div>
     </div>
+
+    <!-- modal kembali buku -->
+    <div class="modal" id="mdlKembali" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Anda yakin ingin mengembalikan buku ini ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a href="" id="btnMdlKembali" class="btn btn-primary">Ya</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
-            $(document).on('click', "#btnHapus", function() {
-                $('#mdlHapus').modal('show');
+            $(document).on('click', "#btnPinjam", function() {
+                $('#mdlPinjam').modal('show');
                 let id = $(this).data('id');
-                $('#btnMdlHapus').attr('href', "hapus-buku.php?id=" + id);
+                $('#btnMdlPinjam').attr('href', "proses-buku.php?id=" + id + "&simpan=ubah");
+            })
+
+            $(document).on('click', "#btnKembali", function() {
+                $('#mdlKembali').modal('show');
+                let id = $(this).data('id');
+                $('#btnMdlKembali').attr('href', "proses-buku.php?id=" + id + "&kembali=ubah");
             })
 
             setTimeout(function() {
@@ -233,35 +274,10 @@ if ($msg == 'deleted') {
             }, 5000)
         })
     </script>
-</div>
-<!-- Modal Pinjam Buku -->
-<div class="modal" id="mdlPinjamBuku" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Konfirmasi Peminjaman Buku</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Anda yakin akan meminjam buku ini?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <a href="" id="btnConfirmPinjam" class="btn btn-primary">Ya, Pinjam</a>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script>
-    function openPinjamModal(id) {
-        document.getElementById('btnConfirmPinjam').href = 'proses-pinjam.php?id=' + id; // Sesuaikan dengan skrip peminjaman buku Anda
-        var myModal = new bootstrap.Modal(document.getElementById('mdlPinjamBuku'));
-        myModal.show();
-    }
-</script>
-<?php
 
-require_once "../template/footer.php"
+    <?php
 
-?>
+    require_once "../template/footer.php"
+
+    ?>
