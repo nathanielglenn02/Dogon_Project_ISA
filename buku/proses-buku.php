@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 session_start();
 
@@ -26,4 +26,12 @@ if (isset($_POST['simpan'])) {
     exit;
 }
 
-?>
+if (isset($_POST['Ubah Status'])) {
+    // string sql coba2 ubah id
+    /*
+    UPDATE buku SET 
+    id_user_peminjam = 7,
+    id_user_pelayanan = 1
+    WHERE id = 5;
+    */
+}
