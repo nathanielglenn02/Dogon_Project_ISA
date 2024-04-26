@@ -14,6 +14,7 @@ if (isset($_POST['simpan'])) {
     $isbn = htmlspecialchars($_POST['isbn']);
     $judul = htmlspecialchars($_POST['judul']);
     $penerbit = htmlspecialchars($_POST['penerbit']);
+    $tahunbuku = htmlspecialchars($_POST['tahun-buku']);
 
     $cekIsbn = mysqli_query($koneksi, "SELECT isbn FROM buku WHERE isbn = '$isbn'");
     if (mysqli_num_rows($cekIsbn) > 0) {
@@ -21,9 +22,20 @@ if (isset($_POST['simpan'])) {
         exit;
     }
 
-    mysqli_query($koneksi, "INSERT INTO buku VALUES (null, '$sampul', '$isbn', '$judul', '$penerbit', 1, 'EMP')");
-    header("location:add-buku.php?msg=added");
-    exit;
+    if ($sampul != null) {
+        $url = "add-buku.php";
+        $sampul = uploadimg($url);
+    } else {
+        $sampul = "default-cover-book.png";
+    }
+
+    mysqli_query($koneksi, "INSERT INTO buku VALUES (null, '$sampul', '$isbn', '$judul', '$penerbit', '$tahunbuku', 1, 'EMP', null, null);");
+
+    echo "<script>
+                alert('Buku baru berhasil disimpan');
+                document.location.href = 'add-buku.php';
+        </script>";
+    return;
 }
 
 if (isset($_POST['Ubah Status'])) {
