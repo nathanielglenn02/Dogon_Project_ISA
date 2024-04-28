@@ -233,7 +233,10 @@ $nilaiUjian = mysqli_query($koneksi, "SELECT * FROM nilai_ujian WHERE no_ujian =
             </tr>
         </tfoot>
     </table>
-
+    
+    <script type="text/javascript">
+        window.print()
+    </script>
 </body>
 
 </html>

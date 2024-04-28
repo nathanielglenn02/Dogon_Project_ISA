@@ -9,7 +9,33 @@ if (!isset($_SESSION['ssLogin'])) {
 
 require_once "../service/config.php";
 
+function encryptData($data, $key) {
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
+    return base64_encode($iv . $encrypted);
+}
 
+function decryptData($encryptedData, $key) {
+    $data = base64_decode($encryptedData);
+    $ivSize = openssl_cipher_iv_length('aes-256-cbc');
+    $iv = substr($data, 0, $ivSize);
+    $encrypted = substr($data, $ivSize);
+    return openssl_decrypt($encrypted, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
+}
+/*
+
+$key = "rahasia";
+$data = "Informasi Rahasia";
+$encryptedData = encryptData($data, $key);
+
+// Menyisipkan data terenkripsi ke dalam 'Creator' metadata
+$pdf->SetCreator($encryptedData);
+$pdf->Output('F', 'output_stego.pdf');
+
+header('Content-Type: application/pdf');
+header('Content-Disposition: attachment; filename="output_stego.pdf"');
+readfile('output_stego.pdf');
+*/
 ?>
 
 <!DOCTYPE html>
@@ -66,10 +92,22 @@ require_once "../service/config.php";
                     <td align="center"><?= $data['hasil_ujian'] ?></td>
 
                 </tr>
-
             <?php
-
             }
+            
+            $key = "classifiedDataUjian";
+            $encryptedData = encryptData($data, $key);     
+            echo $encryptedData;
+
+            $command = "gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER -sOutputFile=output.pdf -c \"[ /Title ($encryptedData) /DOCINFO pdfmark\" -f Laporan Hasil Ujian.pdf";
+            shell_exec($command);
+
+            // To extract data
+            $metadata = shell_exec("pdftk output.pdf dump_data");
+            // You'll need to parse $metadata to find your encrypted data
+
+            
+
             ?>
         </tbody>
         <tfoot>

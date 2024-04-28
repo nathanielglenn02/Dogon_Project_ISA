@@ -148,16 +148,13 @@ if ($profile['jabatan'] == "Siswa") {
 
         function previewPDF() {
             if (noUjian.value != '') {
-                const myWindow = window.open("../report/r-nilai-ujian.php?noUjian=" + noUjian.value);
+                const myWindow = window.open("../report/r-nilai-ujian.php?noUjian=" + noUjian.value, "", "width=900,height=600,left=100");
 
             } else {
                 alert("Please select a No Ujian.");
             }
-
         }
     </script>
-
-
     <?php
 
     require_once "../template/footer.php";
