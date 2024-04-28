@@ -32,8 +32,8 @@ if (isset($_POST['simpan'])) {
     mysqli_query($koneksi, "INSERT INTO buku VALUES (null, '$sampul', '$isbn', '$judul', '$penerbit', '$tahunbuku', 1, 'EMP', null, null);");
 
     echo "<script>
-                alert('Buku baru berhasil disimpan');
-                document.location.href = 'add-buku.php';
+                alert('Tambah buku berhasil!');
+                document.location.href = 'buku.php';
         </script>";
     return;
 }
