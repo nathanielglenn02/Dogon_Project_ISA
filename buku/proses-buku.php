@@ -53,7 +53,7 @@ if (isset($_GET['simpan'])) {
         // Corrected SQL UPDATE query with commas between column updates
         $updateQuery = "UPDATE buku SET 
                         id_user_peminjam = $idUserPeminjam,
-                        stok_buku = stok_buku - 1,
+                        stok_buku = stok_buku,
                         dipinjam = '$status' /* Enclose string values in quotes */
                         WHERE id = $id";
 
@@ -117,5 +117,45 @@ if (isset($_GET['kembali'])) {
 
         header("Location: buku.php?msg=notborrowed");
         exit;
+    }
+}
+
+if (isset($_GET['terima'])) {
+    $id = $_GET['id'];
+
+    // Ambil stok buku saat ini
+    $stockCheckQuery = mysqli_query($koneksi, "SELECT stok_buku FROM buku WHERE id = $id");
+    $stock = mysqli_fetch_array($stockCheckQuery);
+
+    if ($stock['stok_buku'] == 1 && $status == 'PND') {
+        // Status untuk buku yang dikembalikan
+        $status = 'ACC'; // Pastikan menggunakan tanda kutip untuk nilai string
+
+        $cekIdPelayan = mysqli_query($koneksi, "SELECT id_user_pelayanan FROM buku WHERE id = $id");
+
+        if ($cekIdPelayan == null) {
+            // Perbarui query SQL dengan benar
+            $updateQuery = "UPDATE buku SET 
+            id_user_pelayan = '$cekIdPelayan',
+            stok_buku = stok_buku - 1,
+            dipinjam = '$status'
+            WHERE id = $id";
+        } else {
+            // Perbarui query SQL dengan benar
+            $updateQuery = "UPDATE buku SET 
+            stok_buku = stok_buku - 1,
+            dipinjam = '$status'
+            WHERE id = $id";
+        }
+
+        if (mysqli_query($koneksi, $updateQuery)) {
+            // Alihkan dengan pesan sukses
+            header("Location: buku.php?msg=terima");
+            exit;
+        } else {
+            // Alihkan dengan pesan error
+            header("Location: buku.php?msg=error");
+            exit;
+        }
     }
 }

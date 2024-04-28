@@ -7,7 +7,7 @@ if (!isset($_SESSION['ssLogin'])) {
     exit();
 }
 
-require_once "../service/config.php"; 
+require_once "../service/config.php";
 $title = "Data Buku - SMA Dogon";
 require_once "../template/header.php";
 require_once "../template/navbar.php";
@@ -42,6 +42,12 @@ if ($msg == 'deleted') {
 if ($msg == 'notborrowed') {
     $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
     <i class="fa-solid fa-exclamation"></i>  Mohon pinjam buku terlebih dahulu
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'terima') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Pinjam Buku berhasil diterima..
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
@@ -140,7 +146,7 @@ if ($msg == 'notborrowed') {
                                         <button type="button" data-id="<?= $data['id'] ?>" id="btnKembali" class="btn btn-sm btn-warning" title="kembali buku"><i class="fa-solid fa-rotate-left"></i></button>
                                     </td>
                                     <td>
-                                        <a href="edit-pelajaran.php?id=<?= $data['id'] ?>" id="btnSimpan" class="btn btn-sm btn-warning <?= $displaySiswa ?>" title="Update Status"><i class="fa-solid fa-shuffle"></i></a>
+                                        <a href="proses-buku.php?id=<?= $data['id'] ?>" id="btnTerima" class="btn btn-sm btn-warning <?= $displaySiswa ?>" title="update Status"><i class="fa-solid fa-shuffle"></i></a>
                                         <?= $data['dipinjam'] ?>
                                     </td>
                                     <td>
@@ -256,6 +262,12 @@ if ($msg == 'notborrowed') {
                 $('#mdlKembali').modal('show');
                 let id = $(this).data('id');
                 $('#btnMdlKembali').attr('href', "proses-buku.php?id=" + id + "&kembali=ubah");
+            })
+
+            $(document).on('click', "#btnTerima", function() {
+                $('#mdlTerima').modal('show');
+                let id = $(this).data('id');
+                $('#btnMdlTerima').attr('href', "proses-buku.php?id=" + id + "&terima=ubah");
             })
 
             setTimeout(function() {
