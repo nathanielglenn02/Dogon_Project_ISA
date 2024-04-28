@@ -13,6 +13,19 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+function decryptDataWithPrivateKey($encryptedData, $privateKeyPath)
+{
+    if (!file_exists($privateKeyPath)) {
+        die("File kunci privat tidak ditemukan: $privateKeyPath");
+    }
+    $privateKey = file_get_contents($privateKeyPath);
+    $privateKeyResource = openssl_pkey_get_private($privateKey);
+    if (!$privateKeyResource) {
+        die("Gagal memuat kunci privat.");
+    }
+    openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privateKeyResource);
+    return $decrypted;
+}
 
 $username = $_SESSION["ssUser"];
 $queryUser = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
@@ -51,6 +64,24 @@ if ($msg == 'terima') {
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
+if ($msg == 'waitingacc') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-exclamation"></i>  Mohon tunggu acc terlebih dahulu, baru bisa dikembalikan
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'sedangdipinjam') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-exclamation"></i>  Mohon maaf buku sedang dipinjam
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'outofstock') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-exclamation"></i>  Mohon maaf tidak ada stok buku
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
 ?>
 
 
@@ -72,7 +103,7 @@ if ($msg == 'terima') {
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-list"></i> Data Buku
-                    <a href="add-buku.php" class="btn btn-sm btn-primary float-end ms-1"><i class="fa-solid fa-plus"></i> Tambah Data Buku</a>
+                    <a href="add-buku.php" class="btn btn-sm btn-primary float-end ms-1 <?= $displaySiswa ?>"><i class="fa-solid fa-plus"></i> Tambah Data Buku</a>
                 </div>
                 <div class="card-body">
 
@@ -116,6 +147,8 @@ if ($msg == 'terima') {
                         </thead>
                         <tbody>
                             <?php
+                            $no = 1;
+
                             $queryBuku = mysqli_query($koneksi, "
                             SELECT 
                                 buku.*,
@@ -129,15 +162,21 @@ if ($msg == 'terima') {
                             while ($data = mysqli_fetch_array($queryBuku)) {
                             ?>
                                 <tr>
-                                    <td><?= $data['id'] ?></td>
+                                    <th scope="row"><?= $no++ ?></th>
                                     <td align="center">
                                         <center>
                                             <img src="../asset/image/<?= $data['sampul'] ?>" class="rounded-circle" alt="Sampul Buku" width="60px">
                                         </center>
                                     </td>
+
+                                    <?php
+                                    $privateKeyPath = '../path/to/private_key.pem';
+                                    $decryptedPenerbit = decryptDataWithPrivateKey($data['penerbit'], $privateKeyPath);
+                                    ?>
+
                                     <td><?= $data['isbn'] ?></td>
                                     <td><?= $data['title'] ?></td>
-                                    <td><?= $data['penerbit'] ?></td>
+                                    <td><?= $decryptedPenerbit ?></td>
                                     <td><?= $data['tahun_buku'] ?></td>
                                     <td>
                                         <?= $data['stok_buku'] ?>
@@ -146,7 +185,8 @@ if ($msg == 'terima') {
                                         <button type="button" data-id="<?= $data['id'] ?>" id="btnKembali" class="btn btn-sm btn-warning" title="kembali buku"><i class="fa-solid fa-rotate-left"></i></button>
                                     </td>
                                     <td>
-                                        <a href="proses-buku.php?id=<?= $data['id'] ?>" id="btnTerima" class="btn btn-sm btn-warning <?= $displaySiswa ?>" title="update Status"><i class="fa-solid fa-shuffle"></i></a>
+                                        <button type="button" data-id="<?= $data['id'] ?>" id="btnTerima" class="btn btn-sm btn-warning <?= $displaySiswa ?>" title="update Status"><i class="fa-solid fa-shuffle"></i></button>
+
                                         <?= $data['dipinjam'] ?>
                                     </td>
                                     <td>
@@ -250,12 +290,50 @@ if ($msg == 'terima') {
         </div>
     </div>
 
+    <!-- modal terima buku -->
+    <div class="modal" id="mdlTerima" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Anda yakin ingin mengubah status buku ini ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a href="" id="btnMdlTerima" class="btn btn-primary">Ya</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal hapus data -->
+    <div class="modal" id="mdlHapus" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Anda yakin akan menghapus data ini ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a href="" id="btnMdlHapus" class="btn btn-primary">Ya</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
             $(document).on('click', "#btnPinjam", function() {
                 $('#mdlPinjam').modal('show');
                 let id = $(this).data('id');
-                $('#btnMdlPinjam').attr('href', "proses-buku.php?id=" + id + "&simpan=ubah");
+                $('#btnMdlPinjam').attr('href', "proses-buku.php?id=" + id + "&pinjam=ubah");
             })
 
             $(document).on('click', "#btnKembali", function() {
@@ -268,6 +346,12 @@ if ($msg == 'terima') {
                 $('#mdlTerima').modal('show');
                 let id = $(this).data('id');
                 $('#btnMdlTerima').attr('href', "proses-buku.php?id=" + id + "&terima=ubah");
+            })
+
+            $(document).on('click', "#btnHapus", function() {
+                $('#mdlHapus').modal('show');
+                let id = $(this).data('id');
+                $('#btnMdlHapus').attr('href', "hapus-buku.php?id=" + id);
             })
 
             setTimeout(function() {

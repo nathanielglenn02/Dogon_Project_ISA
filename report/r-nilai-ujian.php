@@ -237,3 +237,7 @@ $nilaiUjian = mysqli_query($koneksi, "SELECT * FROM nilai_ujian WHERE no_ujian =
 </body>
 
 </html>
+
+<script type="text/javascript">
+    window.print()
+</script>
