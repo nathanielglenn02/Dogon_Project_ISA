@@ -8,124 +8,76 @@ if (!isset($_SESSION['ssLogin'])) {
 }
 
 require_once "../service/config.php";
+require_once "../stegano/vendor/tecnickcom/tcpdf/tcpdf.php";
 
-function encryptData($data, $key) {
+function encryptData($data, $key)
+{
     $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
     $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
     return base64_encode($iv . $encrypted);
 }
 
-function decryptData($encryptedData, $key) {
-    $data = base64_decode($encryptedData);
+function decryptData($data, $key)
+{
+    $data = base64_decode($data);
     $ivSize = openssl_cipher_iv_length('aes-256-cbc');
     $iv = substr($data, 0, $ivSize);
-    $encrypted = substr($data, $ivSize);
-    return openssl_decrypt($encrypted, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
+    $encryptedData = substr($data, $ivSize);
+    $decrypted = openssl_decrypt($encryptedData, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
+    return $decrypted;
 }
-/*
 
-$key = "rahasia";
-$data = "Informasi Rahasia";
-$encryptedData = encryptData($data, $key);
+$key = "classifiedDataUjian";
 
-// Menyisipkan data terenkripsi ke dalam 'Creator' metadata
-$pdf->SetCreator($encryptedData);
-$pdf->Output('F', 'output_stego.pdf');
+// Membuat instance TCPDF
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-header('Content-Type: application/pdf');
-header('Content-Disposition: attachment; filename="output_stego.pdf"');
-readfile('output_stego.pdf');
-*/
-?>
+// Mengatur informasi dokumen
+$pdf->SetCreator('Your Name');
+$pdf->SetTitle('Laporan Hasil Ujian');
 
-<!DOCTYPE html>
-<html lang="en">
+// Menambahkan halaman
+$pdf->AddPage();
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scales=1.0">
-    <title>Laporan Hasil Ujian</title>
-</head>
+// Menetapkan font
+$pdf->SetFont('helvetica', '', 12);
 
-<body>
-
-
-    <div style="text-align: center">
-        <h2 style="margin-bottom: -15px;">Laporan Hasil Ujian</h2>
-        <h2 style="margin-bottom: 15px;">SMA DOGON</h2>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <td colspan="7" style="height: 5px;">
-                    <hr style="margin-bottom: 2px; margin-left: -5px;" , size="3" color="grey">
-                </td>
-            </tr>
-            <tr>
-                <th style="width: 70px;">NO Ujian</th>
-                <th style="width: 70px;">NIS</th>
+// Menambahkan teks ke PDF
+$content = '<h2 style="text-align:center;">Laporan Hasil Ujian SMA DOGON</h2>';
+$content .= '<table border="1" cellspacing="0" cellpadding="5">';
+$content .= '<tr>
+                <th width="70">NO Ujian</th>
+                <th width="70">NIS</th>
                 <th>Jurusan</th>
-                <th style="width: 110px;">Nilai Terendah</th>
-                <th style="width: 100px;">Nilai Tertinggi</th>
-                <th style="width: 100px;">Rata-rata</th>
-                <th style="width: 100px;">Hasil Ujian</th>
-            </tr>
-            <tr>
-                <td colspan="7" style="height: 5px;">
-                    <hr style="margin-bottom: 2px; margin-top: 1px; margin-left: -5px;" , size="3" color="grey">
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $dataUjian = mysqli_query($koneksi, "SELECT * FROM ujian");
-            while ($data = mysqli_fetch_array($dataUjian)) { ?>
-                <tr>
-                    <td align="center"><?= $data['no_ujian'] ?></td>
-                    <td align="center"><?= $data['nis'] ?></td>
-                    <td><?= $data['jurusan'] ?></td>
-                    <td align="center"><?= $data['nilai_terendah'] ?></td>
-                    <td align="center"><?= $data['nilai_tertinggi'] ?></td>
-                    <td align="center"><?= $data['nilai_rata'] ?></td>
-                    <td align="center"><?= $data['hasil_ujian'] ?></td>
+                <th width="80">Nilai Terendah</th>
+                <th width="80">Nilai Tertinggi</th>
+                <th width="80">Rata-rata</th>
+                <th width="80">Hasil Ujian</th>
+            </tr>';
 
-                </tr>
-            <?php
-            }
-            
-            $key = "classifiedDataUjian";
-            $encryptedData = encryptData($data, $key);     
-            echo $encryptedData;
+// Mengambil data ujian dari database
+$dataUjian = mysqli_query($koneksi, "SELECT * FROM ujian");
+while ($row = mysqli_fetch_array($dataUjian)) {
+    // Mengenkripsi data dari kolom nilai_terendah, nilai_tertinggi, nilai_rata, dan hasil_ujian
+    $encryptedNilaiTerendah = encryptData($row['nilai_terendah'], $key);
+    $encryptedNilaiTertinggi = encryptData($row['nilai_tertinggi'], $key);
+    $encryptedNilaiRata = encryptData($row['nilai_rata'], $key);
+    $encryptedHasilUjian = encryptData($row['hasil_ujian'], $key);
 
-            $command = "gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER -sOutputFile=output.pdf -c \"[ /Title ($encryptedData) /DOCINFO pdfmark\" -f Laporan Hasil Ujian.pdf";
-            shell_exec($command);
+    $content .= '<tr>
+                    <td align="center">' . $row['no_ujian'] . '</td>
+                    <td align="center">' . $row['nis'] . '</td>
+                    <td>' . $row['jurusan'] . '</td>
+                    <td align="center">' . $encryptedNilaiTerendah . '</td>
+                    <td align="center">' . $encryptedNilaiTertinggi . '</td>
+                    <td align="center">' . $encryptedNilaiRata . '</td>
+                    <td align="center">' . $encryptedHasilUjian . '</td>
+                </tr>';
+}
 
-            // To extract data
-            $metadata = shell_exec("pdftk output.pdf dump_data");
-            // You'll need to parse $metadata to find your encrypted data
+$content .= '</table>';
 
-            
+$pdf->writeHTML($content, true, false, true, false, '');
 
-            ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="7">
-                    <hr style="margin-top: 1px; margin-bottom: 2px; 
-                            margin-left: -5px" , size="3" , color="grey">
-                    <p>Surabaya, <?= date('j F Y') ?></p>
-                    <p>Dibuat oleh, <b>Dewan Guru SMA Dogon</b></p>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-
-    <script type="text/javascript">
-        window.print()
-    </script>
-
-</body>
-
-</html>
+// Menyimpan PDF
+$pdf->Output('output_stego.pdf', 'I');
