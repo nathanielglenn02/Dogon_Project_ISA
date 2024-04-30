@@ -39,6 +39,32 @@ if ($profile['jabatan'] == "Guru") {
     $displayGuru = "";
 }
 
+if (isset($_GET['msg'])) {
+    $msg = $_GET['msg'];
+} else {
+    $msg = "";
+}
+
+$alert = '';
+if ($msg == 'deleted') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Data Siswa berhasil dihapus..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'updated') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Data Siswa berhasil diperbarui..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'cancel') {
+    $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-xmark"></i> Data Siswa gagal diperbarui, nip sudah ada..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+
 ?>
 
 <div id="layoutSidenav_content">
@@ -50,6 +76,11 @@ if ($profile['jabatan'] == "Guru") {
                 </li>
                 <li class="breadcrumb-item active">Siswa</li>
             </ol>
+            <?php
+            if ($msg != "") {
+                echo $alert;
+            }
+            ?>
             <div class="card">
                 <div class="card-header">
                     <span class="h5 my-2"><i class="fa-solid fa-list"></i> Data Siswa</span>
@@ -117,12 +148,12 @@ if ($profile['jabatan'] == "Guru") {
             </div>
         </div>
     </main>
-</div>
 
 
 
-<?php
 
-require_once "../template/footer.php";
+    <?php
 
-?>
+    require_once "../template/footer.php";
+
+    ?>

@@ -17,8 +17,5 @@ if ($foto != 'default.png') {
     unlink('../asset/image/' . $foto);
 }
 
-echo "<script> 
-        alert('Data siswa berhasil dihapus..');
-        document.location.href='siswa.php';
-    </script>";
+header("location:siswa.php?msg=deleted");
 return;

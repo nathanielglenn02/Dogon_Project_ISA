@@ -58,6 +58,18 @@ if ($msg == 'notborrowed') {
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>';
 }
+if ($msg == 'borrowed') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i>  Buku berhasil dipinjam
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'returned') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-exclamation"></i>  Buku berhasil dikembalikan
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
 if ($msg == 'terima') {
     $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
     <i class="fa-solid fa-circle-check"></i> Pinjam Buku berhasil diterima..

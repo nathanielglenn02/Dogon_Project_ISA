@@ -48,10 +48,13 @@ if (isset($_POST['simpan'])) {
 
     mysqli_query($koneksi, "INSERT INTO siswa VALUES('$nis','$nama','$alamat_encrypted','$kelas','$jurusan','$foto');");
 
-    echo "<script>
-                alert('Data siswa berhasil disimpan');
-                document.location.href = 'add-siswa.php';
-        </script>";
+    // echo "<script>
+    //             alert('Data siswa berhasil disimpan');
+    //             document.location.href = 'add-siswa.php';
+    //     </script>";
+
+    header("location:add-siswa.php?msg=added");
+    exit;
     return;
 } else if (isset($_POST['update'])) {
     $nis = $_POST['nis'];
@@ -81,9 +84,6 @@ if (isset($_POST['simpan'])) {
                                 foto        = '$fotoSiswa'
                                 WHERE nis   = '$nis'
                                 ");
-    echo "<script>
-        alert('Data siswa berhasil di update..');
-        document.location.href='siswa.php';
-        </script>";
+    header("location:siswa.php?msg=updated");
     return;
 }

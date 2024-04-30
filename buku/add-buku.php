@@ -13,6 +13,38 @@ require_once "../template/header.php";
 require_once "../template/navbar.php";
 require_once "../template/sidebar.php";
 
+if (isset($_GET['msg'])) {
+    $msg = $_GET['msg'];
+} else {
+    $msg = "";
+}
+
+$alert = '';
+if ($msg == 'cancel') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Buku gagal, NIP sudah ada..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'notimage') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Buku gagal, file yang anda upload tidak sesuai..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'oversize') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Buku gagal, ukuran file gambar melebihi 1 MB
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'added') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Tambah Buku berhasil..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+
 ?>
 
 <div id="layoutSidenav_content">
@@ -24,6 +56,10 @@ require_once "../template/sidebar.php";
                 <li class="breadcrumb-item"><a href="buku.php" style="text-decoration: none; color: black;">Buku</a></li>
                 <li class="breadcrumb-item active">Tambah Buku</li>
             </ol>
+            <?php if ($msg != '') {
+                echo $alert;
+            }
+            ?>
             <form action="proses-buku.php" method="POST" enctype="multipart/form-data">
                 <div class="card">
                     <div class="card-header">
@@ -77,10 +113,9 @@ require_once "../template/sidebar.php";
             </form>
         </div>
     </main>
-</div>
 
-<?php
+    <?php
 
-require_once "../template/footer.php";
+    require_once "../template/footer.php";
 
-?>
+    ?>

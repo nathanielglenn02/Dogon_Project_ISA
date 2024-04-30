@@ -30,6 +30,38 @@ function encryptDataWithPublicKey($data, $publicKeyPath)
     return base64_encode($encrypted); // Encode ke base64 agar bisa disimpan sebagai string
 }
 
+if (isset($_GET['msg'])) {
+    $msg = $_GET['msg'];
+} else {
+    $msg = "";
+}
+
+$alert = '';
+if ($msg == 'cancel') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Siswa gagal, NIP sudah ada..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'notimage') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Siswa gagal, file yang anda upload tidak sesuai..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'oversize') {
+    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-xmark"></i> Tambah Siswa gagal, ukuran file gambar melebihi 1 MB
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+if ($msg == 'added') {
+    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> Tambah Siswa berhasil..
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+
 $queryNis = mysqli_query($koneksi, "SELECT max(nis) as maxNis FROM siswa");
 $data = mysqli_fetch_array($queryNis);
 $maxNIS = $data['maxNis'];
@@ -51,6 +83,10 @@ $maxNIS = "NIS" . sprintf("%03s", $noUrut);
                 <li class="breadcrumb-item active">Tambah Siswa</li>
             </ol>
             <form action="proses-siswa.php" method="POST" enctype="multipart/form-data">
+                <?php if ($msg != '') {
+                    echo $alert;
+                }
+                ?>
                 <div class="card">
                     <div class="card-header">
                         <span class="h5 my-2"><i class="fa-solid fa-square-plus"></i> Tambah Siswa</span>
@@ -120,11 +156,11 @@ $maxNIS = "NIS" . sprintf("%03s", $noUrut);
             </form>
         </div>
     </main>
-</div>
 
 
-<?php
 
-require_once "../template/footer.php";
+    <?php
 
-?>
+    require_once "../template/footer.php";
+
+    ?>

@@ -148,11 +148,11 @@ $data = mysqli_fetch_array($siswa);
             </form>
         </div>
     </main>
-</div>
 
 
-<?php
 
-require_once "../template/footer.php";
+    <?php
 
-?>
+    require_once "../template/footer.php";
+
+    ?>

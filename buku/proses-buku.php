@@ -53,10 +53,8 @@ if (isset($_POST['simpan'])) {
 
     mysqli_query($koneksi, "INSERT INTO buku VALUES (null, '$sampul', '$isbn', '$judul', '$penerbit_encrypted', '$tahunbuku', 1, 'EMP', null, null);");
 
-    echo "<script>
-                alert('Tambah buku berhasil!');
-                document.location.href = 'buku.php';
-        </script>";
+    header("location:add-buku.php?msg=added");
+    exit;
     return;
 }
 
