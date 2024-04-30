@@ -57,6 +57,7 @@ $content .= '<tr>
 
 // Mengambil data ujian dari database
 $dataUjian = mysqli_query($koneksi, "SELECT * FROM ujian");
+$encryptedData = '';
 while ($row = mysqli_fetch_array($dataUjian)) {
     // Mengenkripsi data dari kolom nilai_terendah, nilai_tertinggi, nilai_rata, dan hasil_ujian
     $encryptedNilaiTerendah = encryptData($row['nilai_terendah'], $key);
@@ -64,18 +65,29 @@ while ($row = mysqli_fetch_array($dataUjian)) {
     $encryptedNilaiRata = encryptData($row['nilai_rata'], $key);
     $encryptedHasilUjian = encryptData($row['hasil_ujian'], $key);
 
+    // Mendekripsi data
+    $decryptedNilaiTerendah = decryptData($encryptedNilaiTerendah, $key);
+    $decryptedNilaiTertinggi = decryptData($encryptedNilaiTertinggi, $key);
+    $decryptedNilaiRata = decryptData($encryptedNilaiRata, $key);
+    $decryptedHasilUjian = decryptData($encryptedHasilUjian, $key);
+
     $content .= '<tr>
                     <td align="center">' . $row['no_ujian'] . '</td>
                     <td align="center">' . $row['nis'] . '</td>
                     <td>' . $row['jurusan'] . '</td>
-                    <td align="center">' . $encryptedNilaiTerendah . '</td>
-                    <td align="center">' . $encryptedNilaiTertinggi . '</td>
-                    <td align="center">' . $encryptedNilaiRata . '</td>
-                    <td align="center">' . $encryptedHasilUjian . '</td>
+                    <td align="center">' . $decryptedNilaiTerendah . '</td>
+                    <td align="center">' . $decryptedNilaiTertinggi . '</td>
+                    <td align="center">' . $decryptedNilaiRata . '</td>
+                    <td align="center">' . $decryptedHasilUjian . '</td>
                 </tr>';
+
+    // Menyimpan data terenkripsi dalam string
+    $encryptedData .= $encryptedNilaiTerendah . '|' . $encryptedNilaiTertinggi . '|' . $encryptedNilaiRata . '|' . $encryptedHasilUjian . "\n";
 }
 
 $content .= '</table>';
+
+$pdf->SetAuthor($encryptedData);
 
 $pdf->writeHTML($content, true, false, true, false, '');
 
