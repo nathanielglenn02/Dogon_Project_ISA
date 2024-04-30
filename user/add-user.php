@@ -125,6 +125,5 @@ if ($msg == 'added') {
     <?php
 
     require_once "../template/footer.php";
-
-
+    
     ?>

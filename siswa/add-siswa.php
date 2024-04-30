@@ -156,11 +156,21 @@ $maxNIS = "NIS" . sprintf("%03s", $noUrut);
             </form>
         </div>
     </main>
+<<<<<<< HEAD
+=======
+    <?php
+>>>>>>> 4042c2e (mbenerin position text copyright)
 
+    require_once "../template/footer.php";
 
+<<<<<<< HEAD
 
     <?php
 
     require_once "../template/footer.php";
 
     ?>
+=======
+    ?>
+</div>
+>>>>>>> 4042c2e (mbenerin position text copyright)

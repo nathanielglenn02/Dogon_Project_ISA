@@ -87,10 +87,9 @@ if ($msg == 'err2') {
             </form>
         </div>
     </main>
-
-
     <?php
 
     require_once "../template/footer.php";
 
     ?>
+</div>

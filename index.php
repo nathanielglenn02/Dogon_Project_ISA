@@ -88,8 +88,6 @@ while ($data = mysqli_fetch_array($lulusUjian)) {
                     </div>
                 </div>
             </div>
-            <div class="row">
-            </div>
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -153,8 +151,18 @@ while ($data = mysqli_fetch_array($lulusUjian)) {
                     display: false
                 }
             }
+<<<<<<< HEAD
         });
     </script>
     <?php
     require_once "template/footer.php";
     ?>
+=======
+        }
+    });
+</script>
+
+<?php
+    require_once "template/footer.php";
+?>
+>>>>>>> 4042c2e (mbenerin position text copyright)

@@ -112,10 +112,10 @@ if ($msg == 'added') {
                 </div>
             </form>
         </div>
-    </main>
-
+        </main>
     <?php
 
     require_once "../template/footer.php";
 
     ?>
+</div>

@@ -148,12 +148,10 @@ if ($msg == 'cancel') {
             </div>
         </div>
     </main>
-
-
-
-
     <?php
 
     require_once "../template/footer.php";
 
     ?>
+</div>
+
