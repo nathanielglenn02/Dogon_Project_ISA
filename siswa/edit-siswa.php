@@ -148,21 +148,9 @@ $data = mysqli_fetch_array($siswa);
             </form>
         </div>
     </main>
-<<<<<<< HEAD
-=======
-    <?php
->>>>>>> 4042c2e (mbenerin position text copyright)
-
-    require_once "../template/footer.php";
-
-<<<<<<< HEAD
-
     <?php
 
     require_once "../template/footer.php";
 
-    ?>
-=======
     ?>
 </div>
->>>>>>> 4042c2e (mbenerin position text copyright)
